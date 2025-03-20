@@ -2,12 +2,15 @@ import SwiftUI
 
 struct HomeView: View {
     var body: some View {
-        TabView {
-            Home1()
-            Home2()
-            Home3()
+        NavigationView {
+            TabView {
+                Home1()
+                Home2()
+                Home3()
+                Home4()
+            }
+            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
         }
-        .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
     }
 }
 
@@ -131,6 +134,55 @@ struct Home3: View {
     }
 }
 
+struct Home4: View {
+    var body: some View {
+        VStack(spacing: 20) { // Réduit l'espace entre les éléments
+            RoundedRectangle(cornerRadius: 20)
+                .fill(Color.gray.opacity(0.3))
+                .frame(height: 710)
+                .overlay(
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text("Ready to ")
+                            .font(.custom("LexendDeca-Black", size: 40))
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        
+                        Text("start this")
+                            .font(.custom("LexendDeca-Black", size: 40))
+                        
+                        Text("journey?")
+                            .font(.custom("LexendDeca-Black", size: 40))
+                        
+                        Spacer()
+                        
+                        Geometry_Home4()
+                    }
+                    .padding()
+                )
+            
+            // Rectangle du bas avec le bouton
+            RoundedRectangle(cornerRadius: 20)
+                .fill(Color.gray.opacity(0.3))
+                .frame(height: 120)
+                .overlay(
+                    NavigationLink(destination: HomeChoice()) {
+                        Text("Let's get this started")
+                            .font(.custom("LexendDeca-Black", size: 18))
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(Color.black)
+                            .cornerRadius(15)
+                    }
+                    .padding(.horizontal, 20)
+                    .padding(.bottom, 20)
+                )
+        }
+        .padding(.horizontal) // Garde un padding sur les côtés
+        .background(Color.white.edgesIgnoringSafeArea(.all))
+    }
+}
+
+
 
 struct Geometry_Home1: View {
     var body: some View {
@@ -204,6 +256,36 @@ struct Geometry_Home3: View {
         }
     }
 }
+
+struct Geometry_Home4: View {
+    var body: some View {
+        ZStack {
+            
+            StarburstShape(points: 8, scale: 0.7)
+                .fill(Color.yellow.opacity(0.1))
+                .stroke(Color.black, lineWidth: 1)
+                .frame(width: 300, height: 300)
+                .offset(x: 0, y: -100)
+            
+            Circle()
+                .fill(Color.green.opacity(0.1))
+                .stroke(Color.black, lineWidth: 1)
+                .frame(width: 180, height: 180)
+                .offset(x: -50, y: 50)
+            
+            Triangle()
+                .fill(Color.blue.opacity(0.25))
+                .stroke(Color.black, lineWidth: 1)
+                .frame(width: 200, height: 200)
+                .offset(x: 40, y: -100)
+                .rotationEffect(Angle(degrees: 80))
+                
+            
+        }
+    }
+}
+
+
 struct Triangle: Shape {
     func path(in rect: CGRect) -> Path {
         var path = Path()
@@ -236,6 +318,34 @@ struct StarburstShape: Shape {
             }
         }
         path.closeSubpath()
+        return path
+    }
+}
+
+struct StarShape: Shape {
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        
+        let width = rect.width
+        let height = rect.height
+        
+        path.move(to: CGPoint(x: width * 0.5, y: 0)) // Sommet haut
+        path.addCurve(to: CGPoint(x: width, y: height * 0.5),
+                      control1: CGPoint(x: width * 0.8, y: 0),
+                      control2: CGPoint(x: width, y: height * 0.2))
+        
+        path.addCurve(to: CGPoint(x: width * 0.5, y: height),
+                      control1: CGPoint(x: width, y: height * 0.8),
+                      control2: CGPoint(x: width * 0.8, y: height))
+        
+        path.addCurve(to: CGPoint(x: 0, y: height * 0.5),
+                      control1: CGPoint(x: width * 0.2, y: height),
+                      control2: CGPoint(x: 0, y: height * 0.8))
+        
+        path.addCurve(to: CGPoint(x: width * 0.5, y: 0),
+                      control1: CGPoint(x: 0, y: height * 0.2),
+                      control2: CGPoint(x: width * 0.2, y: 0))
+        
         return path
     }
 }
