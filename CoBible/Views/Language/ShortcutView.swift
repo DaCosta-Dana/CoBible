@@ -1,10 +1,9 @@
 import SwiftUI
-import MongoSwift
+import RealmSwift
 
 struct ShortcutView: View {
     var languageName: String
-    @Environment(\.mongoClient) var mongoClient: MongoClient
-    @State private var shortcuts: [Shortcut] = []
+    @ObservedResults(Shortcut.self) var shortcuts
     @Environment(\.presentationMode) var presentationMode
 
     var body: some View {
@@ -43,24 +42,6 @@ struct ShortcutView: View {
         }
         .navigationBarBackButtonHidden(true)
         .navigationBarTitleDisplayMode(.inline)
-        .onAppear {
-            fetchShortcuts()
-        }
-    }
-
-    private func fetchShortcuts() {
-        Task {
-            do {
-                let database = mongoClient.db("JavaShortcuts")
-                let collection = database.collection("JavaSC", withType: Shortcut.self)
-                let fetchedShortcuts = try await collection.find().toArray()
-                DispatchQueue.main.async {
-                    self.shortcuts = fetchedShortcuts
-                }
-            } catch {
-                print("Failed to fetch shortcuts: \(error)")
-            }
-        }
     }
 }
 
