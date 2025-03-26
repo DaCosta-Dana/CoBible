@@ -1,9 +1,11 @@
 import SwiftUI
+import MongoSwift
 
 struct ShortcutView: View {
     var languageName: String
-    var shortcuts: [Shortcut]
-    @Environment(\.presentationMode) var presentationMode // Pour gérer le retour en arrière
+    @Environment(\.mongoClient) var mongoClient: MongoClient
+    @State private var shortcuts: [Shortcut] = []
+    @Environment(\.presentationMode) var presentationMode
 
     var body: some View {
         ScrollView {
@@ -29,7 +31,7 @@ struct ShortcutView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button(action: {
-                    presentationMode.wrappedValue.dismiss() // Retour à la vue précédente
+                    presentationMode.wrappedValue.dismiss()
                 }) {
                     HStack {
                         Image(systemName: "chevron.left")
@@ -41,6 +43,24 @@ struct ShortcutView: View {
         }
         .navigationBarBackButtonHidden(true)
         .navigationBarTitleDisplayMode(.inline)
+        .onAppear {
+            fetchShortcuts()
+        }
+    }
+
+    private func fetchShortcuts() {
+        Task {
+            do {
+                let database = mongoClient.db("JavaShortcuts")
+                let collection = database.collection("JavaSC", withType: Shortcut.self)
+                let fetchedShortcuts = try await collection.find().toArray()
+                DispatchQueue.main.async {
+                    self.shortcuts = fetchedShortcuts
+                }
+            } catch {
+                print("Failed to fetch shortcuts: \(error)")
+            }
+        }
     }
 }
 
@@ -49,10 +69,13 @@ struct ShortcutCardView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text(shortcut.title)
+            Text("Shortcut \(shortcut.no): \(shortcut.whatItDoes)")
                 .font(.custom("LexendDeca-Black", size: 20))
                 .bold()
-            Text(shortcut.description)
+            Text("How to do it: \(shortcut.howToDoIt)")
+                .font(.custom("LexendDeca-Regular", size: 16))
+                .foregroundColor(.gray)
+            Text("Explanation: \(shortcut.explanation)")
                 .font(.custom("LexendDeca-Regular", size: 16))
                 .foregroundColor(.gray)
         }
@@ -64,29 +87,20 @@ struct ShortcutCardView: View {
     }
 }
 
-struct Shortcut: Identifiable {
-    let id = UUID()
-    let title: String
-    let description: String
-}
+struct Shortcut: Identifiable, Codable {
+    let id: BSONObjectID
+    let no: Int
+    let whatItDoes: String
+    let howToDoIt: String
+    let explanation: String
 
-// ✅ Preview
-struct ShortcutView_Previews: PreviewProvider {
-    static var previews: some View {
-        ShortcutView(
-            languageName: "Java",
-            shortcuts: [
-                Shortcut(title: "Print", description: "Use System.out.println(\"message\"); to print a message."),
-                Shortcut(title: "For Loop", description: "Use for(int i = 0; i < n; i++) to create a loop."),
-                Shortcut(title: "If Statement", description: "Use if(condition) { ... } to create a conditional block."),
-                Shortcut(title: "While Loop", description: "Use while(condition) { ... } to create a loop."),
-                Shortcut(title: "Array Declaration", description: "Use int[] arr = new int[size]; to declare an array."),
-                Shortcut(title: "Class Declaration", description: "Use class ClassName { ... } to declare a class."),
-                Shortcut(title: "Method Declaration", description: "Use returnType methodName() { ... } to declare a method."),
-                Shortcut(title: "Try-Catch Block", description: "Use try { ... } catch(Exception e) { ... } to handle exceptions."),
-                Shortcut(title: "Switch Statement", description: "Use switch(variable) { case value: ... } to create a switch."),
-                Shortcut(title: "Import Statement", description: "Use import packageName.ClassName; to import a class.")
-            ]
-        )
+    enum CodingKeys: String, CodingKey {
+        case id = "_id"
+        case no = "No"
+        case whatItDoes = "What it does"
+        case howToDoIt = "How to do it?"
+        case explanation = "Explanation"
     }
 }
+
+// Removed the ShortcutView_Previews struct since data is fetched dynamically.

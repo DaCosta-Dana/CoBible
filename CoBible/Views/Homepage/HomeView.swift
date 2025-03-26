@@ -16,6 +16,7 @@ struct HomeView: View {
             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
         }
         .onAppear {
+            verifyMongoConnection()
             fetchItems()
         }
     }
@@ -31,6 +32,18 @@ struct HomeView: View {
                 }
             } catch {
                 print("Failed to fetch items: \(error)")
+            }
+        }
+    }
+
+    private func verifyMongoConnection() {
+        Task {
+            do {
+                let database = mongoClient.db("CoBibleDB")
+                let collectionNames = try await database.listCollectionNames()
+                print("Connected to MongoDB. Collections: \(collectionNames)")
+            } catch {
+                print("Failed to connect to MongoDB: \(error)")
             }
         }
     }

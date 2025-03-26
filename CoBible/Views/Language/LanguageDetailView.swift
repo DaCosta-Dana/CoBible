@@ -24,10 +24,7 @@ struct LanguageDetailView: View {
                 VStack(spacing: 20) {
                     // Navigation vers ShortcutView
                     NavigationLink(
-                        destination: ShortcutView(
-                            languageName: languageName,
-                            shortcuts: getShortcuts(for: languageName)
-                        )
+                        destination: ShortcutView(languageName: languageName)
                     ) {
                         OptionCardView(optionName: "Shortcuts", iconName: "bolt.fill", color: .blue)
                             .foregroundColor(.black)
