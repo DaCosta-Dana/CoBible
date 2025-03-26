@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftData
+import MongoSwift
 
 @main
 struct CoBibleApp: App {
@@ -22,10 +23,20 @@ struct CoBibleApp: App {
             fatalError("Could not create ModelContainer: \(error)")
         }
     }()
+    
+    var mongoClient: MongoClient = {
+        do {
+            let client = try MongoClient("mongodb+srv://dana:2002D@n@0516@java.doawzub.mongodb.net/?retryWrites=true&w=majority&appName=Java")
+            return client
+        } catch {
+            fatalError("Failed to initialize MongoDB client: \(error)")
+        }
+    }()
 
     var body: some Scene {
         WindowGroup {
             HomeView()
+                .environment(\.mongoClient, mongoClient) // Pass MongoClient to the environment
         }
         .modelContainer(sharedModelContainer)
     }

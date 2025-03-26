@@ -1,6 +1,10 @@
 import SwiftUI
+import MongoSwift
 
 struct HomeView: View {
+    @Environment(\.mongoClient) var mongoClient: MongoClient
+    @State private var items: [Item] = []
+
     var body: some View {
         NavigationView {
             TabView {
@@ -10,6 +14,24 @@ struct HomeView: View {
                 Home4()
             }
             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
+        }
+        .onAppear {
+            fetchItems()
+        }
+    }
+
+    private func fetchItems() {
+        Task {
+            do {
+                let database = mongoClient.db("CoBibleDB")
+                let collection = database.collection("items", withType: Item.self)
+                let fetchedItems = try await collection.find().toArray()
+                DispatchQueue.main.async {
+                    self.items = fetchedItems
+                }
+            } catch {
+                print("Failed to fetch items: \(error)")
+            }
         }
     }
 }

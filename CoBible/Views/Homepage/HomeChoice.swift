@@ -1,6 +1,9 @@
 import SwiftUI
+import MongoSwift
 
 struct HomeChoice: View {
+    @Environment(\.mongoClient) var mongoClient: MongoClient
+
     var body: some View {
         NavigationView {
             VStack(spacing: 20) {
@@ -45,6 +48,10 @@ struct HomeChoice: View {
 }
 .padding(.horizontal)
                 
+                Button("Add Item") {
+                    addItem()
+                }
+                
                 Spacer()
             }
             .background(
@@ -53,6 +60,20 @@ struct HomeChoice: View {
             )
         }
         .navigationBarBackButtonHidden(true)
+    }
+
+    private func addItem() {
+        Task {
+            do {
+                let database = mongoClient.db("CoBibleDB")
+                let collection = database.collection("items", withType: Item.self)
+                let newItem = Item(timestamp: Date())
+                try await collection.insertOne(newItem)
+                print("Item added successfully")
+            } catch {
+                print("Failed to add item: \(error)")
+            }
+        }
     }
 }
 

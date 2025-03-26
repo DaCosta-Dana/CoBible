@@ -7,12 +7,15 @@
 
 import Foundation
 import SwiftData
+import MongoSwift
 
 @Model
 final class Item {
     var timestamp: Date
-    
-    init(timestamp: Date) {
+    var id: BSONObjectID? // MongoDB ObjectID
+
+    init(timestamp: Date, id: BSONObjectID? = nil) {
         self.timestamp = timestamp
+        self.id = id
     }
 }
