@@ -3,7 +3,7 @@
 //  CoBible
 //
 //  Created by Erwan Weinmann on 03/03/2025.
-//
+// this is just a git test
 
 import SwiftUI
 import SwiftData
