@@ -1,10 +1,3 @@
-//
-//  CoBibleApp.swift
-//  CoBible
-//
-//  Created by Erwan Weinmann on 03/03/2025.
-// this is just a git test
-
 import SwiftUI
 import SwiftData
 
@@ -12,7 +5,8 @@ import SwiftData
 struct CoBibleApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
-            Item.self,
+            Favorite.self,
+            Shortcut.self,
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 
@@ -26,6 +20,10 @@ struct CoBibleApp: App {
     var body: some Scene {
         WindowGroup {
             HomeView()
+                .onAppear {
+                    let context = sharedModelContainer.mainContext
+                    ShortcutDataManager.populateShortcuts(context: context)
+                }
         }
         .modelContainer(sharedModelContainer)
     }
