@@ -1,21 +1,22 @@
 import SwiftUI
+import SwiftData
 
 struct ShortcutView: View {
     var languageName: String
-    var shortcuts: [Shortcut]
-    @Environment(\.presentationMode) var presentationMode // Pour gérer le retour en arrière
+    @Query var shortcuts: [Shortcut] // Fetch shortcuts from the database
+    @Environment(\.presentationMode) var presentationMode // For navigation back
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
-                // Titre de la page
+                // Page title
                 Text("\(languageName) Shortcuts")
                     .font(.custom("LexendDeca-Black", size: 30))
                     .bold()
                     .padding(.top, 20)
                     .padding(.horizontal)
 
-                // Liste des raccourcis
+                // List of shortcuts
                 ForEach(shortcuts) { shortcut in
                     ShortcutCardView(shortcut: shortcut)
                 }
@@ -29,7 +30,7 @@ struct ShortcutView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button(action: {
-                    presentationMode.wrappedValue.dismiss() // Retour à la vue précédente
+                    presentationMode.wrappedValue.dismiss() // Navigate back
                 }) {
                     HStack {
                         Image(systemName: "chevron.left")
@@ -52,7 +53,7 @@ struct ShortcutCardView: View {
             Text(shortcut.title)
                 .font(.custom("LexendDeca-Black", size: 20))
                 .bold()
-            Text(shortcut.description)
+            Text(shortcut.explanation)
                 .font(.custom("LexendDeca-Regular", size: 16))
                 .foregroundColor(.gray)
         }
@@ -64,29 +65,10 @@ struct ShortcutCardView: View {
     }
 }
 
-struct Shortcut: Identifiable {
-    let id = UUID()
-    let title: String
-    let description: String
-}
-
 // ✅ Preview
 struct ShortcutView_Previews: PreviewProvider {
     static var previews: some View {
-        ShortcutView(
-            languageName: "Java",
-            shortcuts: [
-                Shortcut(title: "Print", description: "Use System.out.println(\"message\"); to print a message."),
-                Shortcut(title: "For Loop", description: "Use for(int i = 0; i < n; i++) to create a loop."),
-                Shortcut(title: "If Statement", description: "Use if(condition) { ... } to create a conditional block."),
-                Shortcut(title: "While Loop", description: "Use while(condition) { ... } to create a loop."),
-                Shortcut(title: "Array Declaration", description: "Use int[] arr = new int[size]; to declare an array."),
-                Shortcut(title: "Class Declaration", description: "Use class ClassName { ... } to declare a class."),
-                Shortcut(title: "Method Declaration", description: "Use returnType methodName() { ... } to declare a method."),
-                Shortcut(title: "Try-Catch Block", description: "Use try { ... } catch(Exception e) { ... } to handle exceptions."),
-                Shortcut(title: "Switch Statement", description: "Use switch(variable) { case value: ... } to create a switch."),
-                Shortcut(title: "Import Statement", description: "Use import packageName.ClassName; to import a class.")
-            ]
-        )
+        ShortcutView(languageName: "Java")
+            .modelContainer(for: Shortcut.self) // Provide a model container for preview
     }
 }
