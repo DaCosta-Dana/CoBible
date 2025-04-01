@@ -30,11 +30,11 @@ struct ShortcutView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button(action: {
-                    presentationMode.wrappedValue.dismiss() // Navigate back
+                    presentationMode.wrappedValue.dismiss() // Navigate back to LangageDetailView
                 }) {
                     HStack {
-                        Image(systemName: "chevron.left")
-                        Text("Back")
+                        Image(systemName: "house")
+                        Text("Home")
                             .font(.custom("LexendDeca-Black", size: 16))
                     }
                 }
