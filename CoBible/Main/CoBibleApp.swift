@@ -5,7 +5,7 @@ import SwiftData
 struct CoBibleApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
-            Favorite.self,
+            //Favorite.self,
             Shortcut.self,
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
