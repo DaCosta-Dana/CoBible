@@ -18,7 +18,9 @@ struct ShortcutView: View {
 
                 // List of shortcuts
                 ForEach(shortcuts) { shortcut in
-                    ShortcutCardView(shortcut: shortcut)
+                    NavigationLink(destination: ShortcutDetailView(shortcut: shortcut)) {
+                        ShortcutCardView(shortcut: shortcut)
+                    }
                 }
             }
             .padding(.horizontal)
