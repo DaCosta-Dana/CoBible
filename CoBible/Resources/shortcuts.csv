@@ -1,50 +1,57 @@
-#No,What it does,How to do it?,Explanation
-1,Declare public Variables,public String name;,"A variable accessible from anywhere in the program."
-2,Declare private Variables,private int age;,"A variable accessible only within the same class."
-3,Declare protected Variables,protected double salary;,"A variable accessible within the same package and subclasses."
-4,Print to Console,System.out.println(""Test to print"");,"Prints text or values to the console."
-5,If Statement,if (condition) { /* Code */ },"Executes a block of code only if the condition is true."
-6,If-Else Statement,if (condition) { /* Code */ } else { /* Alternative code */ },"Runs different code based on a condition."
-7,If-elsif-selse Statement,if (condition) { /* Code */ } elsif { /* Alternative code */ } Else { /* Alternative code 2 */ },"Adds multiple condition checks."
-8,Switch Statement,switch (variable) { case 1: System.out.println(""Case 1""); break; case 2: System.out.println(""Case 2""); break; default: System.out.println(""Default case""); },"Selects a code block to execute based on a variable's value."
-9,For Loop,for (int i = 0; i < 10; i++) { System.out.println(i); },"Loops through code a set number of times."
-10,Enhanced For Loop,for (String item : list) { System.out.println(item); },"Iterates over collections like arrays or lists."
-11,While Loop,while (condition) { /* Code */ },"Repeats code while a condition is true."
-12,Do-While Loop,do { /* Code */ } while (condition);,"Ensures the code runs at least once before checking the condition."
-13,Declare an Array,int[] numbers = {1, 2, 3, 4, 5};,"Stores multiple values in a single variable."
-14,Iterate Over an Array,for (int num : numbers) { System.out.println(num); },"Loops through each element in an array."
-15,Create a class,class MyClass { int x = 10; },"Defines a blueprint for objects."
-16,Create an Object,MyClass obj = new MyClass(); System.out.println(obj.x);,"Instantiates an object from a class."
-17,Constructor,class MyClass { MyClass() { System.out.println(""Constructor""); } },"Initializes an object when created."
-18,Create a Method,public static void myMethod() { System.out.println(""Hello!""); },"Defines reusable code within a class."
-19,Method with Parameters,public static int add(int a, int b) { return a + b; },"Accepts input values when called."
-20,Method Overloading,static int add(int a, int b) { return a + b; },"Allows multiple methods with the same name but different parameters."
-21,Method Overriding,class Child extends Parent { void show() { System.out.println(""Child""); } },"Replaces a parent method in a subclass."
-22,Extend a Class,class Dog extends Animal { void makeSound() { System.out.println(""Bark!""); } },"Inherits properties and methods from another class."
-23,Final Variable,final int x = 10;,"Prevents a variable’s value from being changed."
-24,Final Method,class A { final void display() { /* Cannot override */ } },"Prevents a method from being overridden."
-25,Final Class,final class MyFinalClass { /* Cannot be extended */ },"Prevents a class from being inherited."
-26,Static Method,class MyClass { static void myMethod() { System.out.println(""Static Method""); } },"A method that belongs to the class rather than an instance."
-27,Class a static Method,MyClass.myMethod();,"Invokes a static method without creating an object."
-28,Scanner for Input,Scanner scanner = new Scanner(System.in); String input = scanner.nextLine(); Scanner.close();,"Reads user input from the console."
-29,Try-Catch Exception,try { int r = 10 / 0; } catch (Exception e) { },"Handles runtime errors without stopping execution."
-30,Finally Block,try { /* Code */ } finally { System.out.println(""Always runs""); },"Runs code regardless of an exception occurring."
-31,Throw an Exception,throw new IllegalArgumentException(""Invalid input"");,"Manually triggers an exception."
-32,Create an Interface,interface Animal { void makeSound(); },"Defines a contract for implementing classes."
-33,Implement an Interface,class Dog implements Animal { public void makeSound() { System.out.println(""Bark!""); } },"Enforces method implementation from an interface."
-34,Abstract Class,abstract class Animal { abstract void makeSound(); },"Defines a base class with abstract methods."
-35,HashMap Example,HashMap<String, Integer> map = new HashMap<>();,"Stores key-value pairs."
-36,ArrayList Example,ArrayList<String> list = new ArrayList<>(); list.add(""Apple"");,"A resizable array implementation."
-37,Iterate over ArrayList,for (String item : list) { System.out.println(item); },"Loops through an ArrayList."
-38,HashSet Example,HashSet<Integer> set = new HashSet<>(); set.add(1);,"Stores unique elements with no order."
-39,Thread Creation,class MyThread extends Thread { public void run() { System.out.println(""Thread!""); } },"Runs code in a separate thread."
-40,Runnable Interface,class MyRunnable implements Runnable { public void run() { System.out.println(""Runnable!""); } },"Implements multithreading with an interface."
-41,Synchronized Method,synchronized void myMethod() { /* Code */ },"Ensures thread safety by locking the method."
-42,Atomic Integer,AtomicInteger counter = new AtomicInteger(0);,"Provides thread-safe integer operations."
-43,Read File (BufferedWriter),BufferedReader br = new BufferedReader(new FileReader(""file.txt""));,"Reads a file efficiently."
-44,Write File (BufferedWriter),BufferedWriter bw = new BufferedWriter(new FileWriter(""file.txt""));,"Writes to a file efficiently."
-45,Check if file exists,File file = new File(""test.txt""); if (file.exists()) { },"Checks if a file exists before reading/writing."
-46,Convert String to Integer,int num = Integer.parseInt(""123"");,"Converts a string to an integer."
-47,Convert Integer to String,String str = String.valueOf(123);,"Converts an integer to a string."
-48,Generate Random Number,Random rand = new Random(); int randomNum = rand.nextInt(100);,"Creates a random number between 0 and 99."
-49,Get Current Date & Time,LocalDateTime now = LocalDateTime.now();,"Retrieves the current system date and time."
+No,What it does,Explanation,How to code it in Java,How to code it in Python
+1,Declare public Variables,A variable accessible from anywhere in the program.,public String name;,name = ''  # Global/public variable in a module
+2,Declare private Variables,A variable accessible only within the same class.,private int age;,self.__age = 0  # Name mangling for 'private'
+3,Declare protected Variables,A variable accessible within the same package and subclasses.,protected double salary;,self._salary = 0.0  # Convention for 'protected'
+4,Print to Console,Prints text or values to the console.,System.out.println("Test to print");,print('Test to print')
+5,If Statement,Executes a block of code only if the condition is true.,if (condition) { /* Code */ },if condition:\n    result = True
+6,If-Else Statement,Runs different code based on a condition.,if (condition) { /* Code */ } else { /* Alternative code */ },if condition:\n    result = True\nelse:\n    result = False
+7,If-elsif-else Statement,Adds multiple condition checks.,if (a) { } else if (b) { } else { },if a:\n    result = 'a'\nelif b:\n    result = 'b'\nelse:\n    result = 'other'
+8,Switch Statement,Selects a code block to execute based on a variable's value.,switch (var) { case 1: ... },match var:\n    case 1:\n        print('One')\n    case _:\n        print('Default')
+9,For Loop,Loops through code a set number of times.,for (int i = 0; i < 10; i++) { },for i in range(10):\n    print(i)
+10,Enhanced For Loop,Iterates over collections like arrays or lists.,for (String item : list) { },for item in items:\n    print(item)
+11,While Loop,Repeats code while a condition is true.,while (condition) { },while condition:\n    print('Running')
+12,Do-While Loop,Ensures the code runs at least once before checking the condition.,do { } while (condition);,while True:\n    print('Run once')\n    if not condition:\n        break
+13,Declare an Array,Stores multiple values in a single variable.,int[] nums = {1, 2, 3};,nums = [1, 2, 3]
+14,Iterate Over an Array,Loops through each element in an array.,for (int n : nums) { },for n in nums:\n    print(n)
+15,Create a class,Defines a blueprint for objects.,class MyClass { int x = 10; },class MyClass:\n    def __init__(self):\n        self.x = 10
+16,Create an Object,Instantiates an object from a class.,MyClass obj = new MyClass();,obj = MyClass()\nprint(obj.x)
+17,Constructor,Initializes an object when created.,MyClass() { System.out.println("..."); },class MyClass:\n    def __init__(self):\n        print('Constructor')
+18,Create a Method,Defines reusable code within a class.,public static void hello() { },def hello():\n    print('Hello')
+19,Method with Parameters,Accepts input values when called.,int add(int a, int b) { return a + b; },def add(a, b):\n    return a + b
+20,Method Overloading,Allows multiple methods with same name but different args.,int add(int a, int b); int add(int a);,def add(a, b=0):\n    return a + b
+21,Method Overriding,Replaces a parent method in a subclass.,class Child extends Parent { },class Child(Parent):\n    def show(self):\n        print('Child')
+22,Extend a Class,Inherits properties and methods from another class.,class Dog extends Animal { },class Dog(Animal):\n    def speak(self):\n        print('Bark')
+23,Final Variable,Prevents variable’s value from being changed.,final int x = 10;,"X = 10  # Use UPPERCASE for constants"
+24,Final Method,Prevents method from being overridden.,final void display() { },# Use documentation or raise error
+25,Final Class,Prevents a class from being inherited.,final class A { },# No direct equivalent in Python
+26,Static Method,A method that belongs to the class.,static void greet() { },@staticmethod\ndef greet():\n    print('Hi')
+27,Call Static Method,Invokes a static method without creating an object.,MyClass.greet();,MyClass.greet()
+28,Scanner for Input,Reads user input from the console.,Scanner sc = new Scanner(System.in);,user_input = input("Enter something: ")
+29,Try-Catch Exception,Handles runtime errors.,try { } catch (Exception e) { },try:\n    1/0\nexcept ZeroDivisionError:\n    print('Error')
+30,Finally Block,Runs code regardless of exceptions.,try { } finally { },try:\n    val = 10\nfinally:\n    print('Cleanup')
+31,Throw Exception,Manually triggers an exception.,throw new IllegalArgumentException();,raise ValueError('Invalid input')
+32,Create an Interface,Defines a contract for classes.,interface Animal { },from abc import ABC, abstractmethod\nclass Animal(ABC):\n    @abstractmethod\n    def sound(self):\n        pass
+33,Implement Interface,Implements required methods.,class Dog implements Animal { },class Dog(Animal):\n    def sound(self):\n        print('Bark')
+34,Abstract Class,Defines a base class.,abstract class Animal { },# Same as interface example using ABC
+35,HashMap Example,Stores key-value pairs.,HashMap<String, Integer> map = ...,map = {'a': 1}
+36,ArrayList Example,A resizable array.,ArrayList<String> list = ...,list = ['apple']
+37,Iterate ArrayList,Loops through an ArrayList.,for (String item : list) { },for item in list:\n    print(item)
+38,HashSet Example,Stores unique elements.,HashSet<Integer> set = ...,set_ = {1, 2}
+39,Thread Creation,Runs code in a separate thread.,class MyThread extends Thread { },import threading\nclass MyThread(threading.Thread):\n    def run(self):\n        print('Thread')
+40,Runnable Interface,Implements threading with an interface.,class Task implements Runnable { },def task():\n    print('Runnable')\nthreading.Thread(target=task).start()
+41,Synchronized Method,Ensures thread safety.,synchronized void update() { },from threading import Lock\nlock = Lock()\ndef update():\n    with lock:\n        print('Safe')
+42,Atomic Integer,Thread-safe integer ops.,AtomicInteger count = ...,from multiprocessing import Value\ncount = Value('i', 0)
+43,Read File,Reads a file efficiently.,BufferedReader br = ...,with open('file.txt', 'r') as f:\n    data = f.read()
+44,Write File,Writes to a file efficiently.,BufferedWriter bw = ...,with open('file.txt', 'w') as f:\n    f.write('Text')
+45,Check File Exists,Checks if a file exists.,File f = new File(...);,import os\nif os.path.exists('file.txt'):\n    print('Found')
+46,String to Int,Converts a string to an int.,Integer.parseInt("123");,num = int("123")
+47,Int to String,Converts int to string.,String.valueOf(123);,s = str(123)
+48,Generate Random,Creates a random number.,Random rand = new Random();,import random\nnum = random.randint(0, 99)
+49,Current Date & Time,Retrieves current system time.,LocalDateTime now = ...,from datetime import datetime\nnow = datetime.now()
+50,Format Date & Time,Formats a date.,DateTimeFormatter.ofPattern("dd/MM/yyyy");,now.strftime('%d/%m/%Y')
+51,Parse Date,Parses a date from string.,LocalDateTime.parse(...);,datetime.strptime('2023-10-01', '%Y-%m-%d')
+52,String Length,Gets number of characters.,str.length();,length = len(my_string)
+53,Substring,Extracts part of string.,str.substring(0, 5);,sub = my_string[0:5]
+54,Split String,Divides string by delimiter.,str.split(",");,parts = my_string.split(',')
+55,Join String,Combines array into string.,String.join(",", parts);,",".join(parts)
+56,Trim String,Removes surrounding whitespace.,str.trim();,trimmed = my_string.strip()
