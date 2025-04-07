@@ -38,9 +38,9 @@ final class ShortcutDataManager {
         }
 
         let rows = csvContent.split(separator: "\n")
-        for row in rows {
+        for row in rows.dropFirst() { // Skip the header row
             let columns = row.split(separator: ",")
-            guard columns.count == 5, // Updated to handle Java and Python code columns
+            guard columns.count == 5, // Ensure all columns are present
                   let number = Int(columns[0].trimmingCharacters(in: .whitespaces)) else {
                 continue // Skip invalid rows
             }
@@ -50,8 +50,27 @@ final class ShortcutDataManager {
             let javaCode = String(columns[3].trimmingCharacters(in: .whitespaces))
             let pythonCode = String(columns[4].trimmingCharacters(in: .whitespaces))
 
-            let shortcut = Shortcut(number: number, title: title, explanation: explanation, javaCode: javaCode, pythonCode: pythonCode, language: "Java") // Default language
-            context.insert(shortcut)
+            // Insert Java shortcut
+            let javaShortcut = Shortcut(
+                number: number,
+                title: title,
+                explanation: explanation,
+                javaCode: javaCode,
+                pythonCode: pythonCode,
+                language: "Java"
+            )
+            context.insert(javaShortcut)
+
+            // Insert Python shortcut
+            let pythonShortcut = Shortcut(
+                number: number,
+                title: title,
+                explanation: explanation,
+                javaCode: javaCode,
+                pythonCode: pythonCode,
+                language: "Python"
+            )
+            context.insert(pythonShortcut)
         }
     }
 
