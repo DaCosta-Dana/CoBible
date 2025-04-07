@@ -18,7 +18,7 @@ struct ShortcutView: View {
 
                 // Filter and display shortcuts for the selected language
                 ForEach(shortcuts.filter { $0.language == languageName }) { shortcut in
-                    NavigationLink(destination: ShortcutDetailView(shortcut: shortcut)) {
+                    NavigationLink(destination: ShortcutDetailView(shortcutTitle: shortcut.title, selectedLanguage: languageName)) {
                         ShortcutCardView(shortcut: shortcut)
                     }
                 }

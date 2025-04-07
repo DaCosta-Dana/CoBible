@@ -6,16 +6,18 @@ final class Shortcut {
     var id: UUID
     var number: Int
     var title: String
-    var code: String
     var explanation: String
-    var language: String // New property to store the language
+    var javaCode: String // Java code snippet
+    var pythonCode: String // Python code snippet
+    var language: String
 
-    init(number: Int, title: String, code: String, explanation: String, language: String) {
+    init(number: Int, title: String, explanation: String, javaCode: String, pythonCode: String, language: String) {
         self.id = UUID()
         self.number = number
         self.title = title
-        self.code = code
         self.explanation = explanation
+        self.javaCode = javaCode
+        self.pythonCode = pythonCode
         self.language = language
     }
 }
@@ -38,18 +40,23 @@ final class ShortcutDataManager {
         let rows = csvContent.split(separator: "\n")
         for row in rows {
             let columns = row.split(separator: ",")
-            guard columns.count == 5, // Updated to handle the new language column
+            guard columns.count == 5, // Updated to handle Java and Python code columns
                   let number = Int(columns[0].trimmingCharacters(in: .whitespaces)) else {
                 continue // Skip invalid rows
             }
 
             let title = String(columns[1].trimmingCharacters(in: .whitespaces))
             let explanation = String(columns[2].trimmingCharacters(in: .whitespaces))
-            let code = String(columns[3].trimmingCharacters(in: .whitespaces))
-            let language = String(columns[4].trimmingCharacters(in: .whitespaces)) // Extract language
+            let javaCode = String(columns[3].trimmingCharacters(in: .whitespaces))
+            let pythonCode = String(columns[4].trimmingCharacters(in: .whitespaces))
 
-            let shortcut = Shortcut(number: number, title: title, code: code, explanation: explanation, language: language)
+            let shortcut = Shortcut(number: number, title: title, explanation: explanation, javaCode: javaCode, pythonCode: pythonCode, language: "Java") // Default language
             context.insert(shortcut)
         }
+    }
+
+    static func fetchShortcutByTitle(title: String, context: ModelContext) -> Shortcut? {
+        let fetchDescriptor = FetchDescriptor<Shortcut>(predicate: #Predicate { $0.title == title })
+        return try? context.fetch(fetchDescriptor).first
     }
 }
