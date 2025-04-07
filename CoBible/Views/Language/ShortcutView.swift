@@ -16,8 +16,8 @@ struct ShortcutView: View {
                     .padding(.top, 20)
                     .padding(.horizontal)
 
-                // Filter and display shortcuts for the selected language
-                ForEach(shortcuts.filter { $0.language == languageName }) { shortcut in
+                // Display all shortcuts
+                ForEach(shortcuts) { shortcut in
                     NavigationLink(destination: ShortcutDetailView(shortcutTitle: shortcut.title, selectedLanguage: languageName)) {
                         ShortcutCardView(shortcut: shortcut)
                     }
@@ -32,7 +32,7 @@ struct ShortcutView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button(action: {
-                    presentationMode.wrappedValue.dismiss() // Navigate back to LangageDetailView
+                    presentationMode.wrappedValue.dismiss() // Navigate back
                 }) {
                     HStack {
                         Image(systemName: "house")

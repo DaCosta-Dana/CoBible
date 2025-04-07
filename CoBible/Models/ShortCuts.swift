@@ -9,16 +9,14 @@ final class Shortcut {
     var explanation: String
     var javaCode: String // Java code snippet
     var pythonCode: String // Python code snippet
-    var language: String
 
-    init(number: Int, title: String, explanation: String, javaCode: String, pythonCode: String, language: String) {
+    init(number: Int, title: String, explanation: String, javaCode: String, pythonCode: String) {
         self.id = UUID()
         self.number = number
         self.title = title
         self.explanation = explanation
         self.javaCode = javaCode
         self.pythonCode = pythonCode
-        self.language = language
     }
 }
 
@@ -50,27 +48,14 @@ final class ShortcutDataManager {
             let javaCode = String(columns[3].trimmingCharacters(in: .whitespaces))
             let pythonCode = String(columns[4].trimmingCharacters(in: .whitespaces))
 
-            // Insert Java shortcut
-            let javaShortcut = Shortcut(
+            let shortcut = Shortcut(
                 number: number,
                 title: title,
                 explanation: explanation,
                 javaCode: javaCode,
-                pythonCode: pythonCode,
-                language: "Java"
+                pythonCode: pythonCode
             )
-            context.insert(javaShortcut)
-
-            // Insert Python shortcut
-            let pythonShortcut = Shortcut(
-                number: number,
-                title: title,
-                explanation: explanation,
-                javaCode: javaCode,
-                pythonCode: pythonCode,
-                language: "Python"
-            )
-            context.insert(pythonShortcut)
+            context.insert(shortcut)
         }
     }
 
