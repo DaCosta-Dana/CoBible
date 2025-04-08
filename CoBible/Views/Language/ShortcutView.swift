@@ -16,32 +16,65 @@ struct ShortcutView: View {
                     .padding(.top, 20)
                     .padding(.horizontal)
 
-                // Display all shortcuts
+                // List of shortcuts
                 ForEach(shortcuts) { shortcut in
-                    NavigationLink(destination: ShortcutDetailView(shortcutTitle: shortcut.title, selectedLanguage: languageName)) {
-                        ShortcutCardView(shortcut: shortcut)
-                    }
+                    ShortcutCardView(shortcut: shortcut)
                 }
             }
             .padding(.horizontal)
+            .padding(.bottom, 70) // Add padding at the bottom to give space for the navigation bar
         }
         .background(
             LinearGradient(gradient: Gradient(colors: [Color.white, Color(UIColor.systemGray6)]), startPoint: .top, endPoint: .bottom)
                 .edgesIgnoringSafeArea(.all)
         )
-        .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button(action: {
-                    presentationMode.wrappedValue.dismiss() // Navigate back
-                }) {
-                    HStack {
-                        Image(systemName: "house")
-                        Text("Home")
-                            .font(.custom("LexendDeca-Black", size: 16))
+        .overlay(
+            VStack {
+                Spacer()
+                HStack(spacing: 100) {
+                    NavigationLink(destination: LanguageDetailView(
+                        languageName: languageName == "Java" ? "Python" : "Java",
+                        imageName: languageName == "Java" ? "python-logo" : "java-logo"
+                    )) {
+                        VStack {
+                            Image(systemName: "house.fill")
+                                .font(.system(size: 24))
+                            Text("Home")
+                                .font(.custom("LexendDeca-Regular", size: 12))
+                        }
+                    }
+
+                    NavigationLink(destination: Text("Profile View").font(.largeTitle)) {
+                        VStack {
+                            Image(systemName: "person.fill")
+                                .font(.system(size: 24))
+                                
+                            Text("Profile")
+                                .font(.custom("LexendDeca-Regular", size: 12))
+                        }
+                    }
+
+                    NavigationLink(destination: HomeChoice()) {
+                        VStack {
+                            Image(systemName: "globe")
+                                .font(.system(size: 24))
+                            Text("Language")
+                                .font(.custom("LexendDeca-Regular", size: 12))
+                        }
                     }
                 }
+                .padding(.vertical, 25)
+                .frame(maxWidth: .infinity)
+                .background(BlurView(style: .systemThinMaterial)) // Effet de flou
+                .clipShape(RoundedRectangle(cornerRadius: 20))
+                .padding(.horizontal, -100)
+                .shadow(radius: 7)
+                //.padding(.bottom, 1)
             }
-        }
+            .edgesIgnoringSafeArea(.bottom),
+            alignment: .bottom
+        )
+
         .navigationBarBackButtonHidden(true)
         .navigationBarTitleDisplayMode(.inline)
     }
@@ -67,7 +100,18 @@ struct ShortcutCardView: View {
     }
 }
 
-// ✅ Preview
+struct BlurView: UIViewRepresentable {
+    var style: UIBlurEffect.Style
+    
+    func makeUIView(context: Context) -> UIVisualEffectView {
+        let view = UIVisualEffectView(effect: UIBlurEffect(style: style))
+        return view
+    }
+    
+    func updateUIView(_ uiView: UIVisualEffectView, context: Context) {}
+}
+
+
 struct ShortcutView_Previews: PreviewProvider {
     static var previews: some View {
         ShortcutView(languageName: "Java")
