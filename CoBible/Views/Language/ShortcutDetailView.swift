@@ -34,7 +34,7 @@ struct ShortcutDetailView: View {
                             .bold()
                             .padding(.bottom, 5)
 
-                        Text(selectedLanguage == "Java" ? shortcut.javaCode : shortcut.pythonCode)
+                        Text((selectedLanguage == "Java" ? shortcut.javaCode : shortcut.pythonCode)!)
                             .font(.custom("LexendDeca-Regular", size: 16))
                             .foregroundColor(.black)
                             .padding()

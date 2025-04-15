@@ -5,6 +5,15 @@ struct ShortcutView: View {
     var languageName: String
     @Query var shortcuts: [Shortcut] // Fetch shortcuts from the database
     @Environment(\.presentationMode) var presentationMode // For navigation back
+    @State private var searchText: String = "" // State for search text
+
+    var filteredShortcuts: [Shortcut] {
+        if searchText.isEmpty {
+            return shortcuts
+        } else {
+            return shortcuts.filter { $0.title.localizedCaseInsensitiveContains(searchText) }
+        }
+    }
 
     var body: some View {
         ScrollView {
@@ -16,8 +25,20 @@ struct ShortcutView: View {
                     .padding(.top, 20)
                     .padding(.horizontal)
 
+                // Search bar
+                HStack {
+                    Image(systemName: "magnifyingglass")
+                        .foregroundColor(.gray)
+                    TextField("Search shortcuts...", text: $searchText)
+                        .font(.custom("LexendDeca-Black", size: 16))
+                }
+                .padding(10)
+                .background(Color(UIColor.systemGray6))
+                .clipShape(RoundedRectangle(cornerRadius: 15))
+                .padding(.horizontal)
+
                 // List of shortcuts
-                ForEach(shortcuts) { shortcut in
+                ForEach(filteredShortcuts) { shortcut in
                     ShortcutCardView(shortcut: shortcut)
                 }
             }
@@ -48,7 +69,6 @@ struct ShortcutView: View {
                         VStack {
                             Image(systemName: "person.fill")
                                 .font(.system(size: 24))
-                                
                             Text("Profile")
                                 .font(.custom("LexendDeca-Regular", size: 12))
                         }

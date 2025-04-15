@@ -8,10 +8,10 @@ final class Shortcut {
     var number: Int
     var title: String
     var explanation: String
-    var javaCode: String // Java code snippet
-    var pythonCode: String // Python code snippet
+    var javaCode: String? // Make optional to avoid migration issues
+    var pythonCode: String? // Make optional to avoid migration issues
 
-    init(number: Int, title: String, explanation: String, javaCode: String, pythonCode: String) {
+    init(number: Int, title: String, explanation: String, javaCode: String?, pythonCode: String?) {
         self.id = UUID()
         self.number = number
         self.title = title

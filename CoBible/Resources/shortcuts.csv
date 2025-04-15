@@ -1,4 +1,4 @@
-No,What it does,Explanation,How to code it in Java,How to code it in Python
+#No,What it does,Explanation,How to code it in Java,How to code it in Python
 1,Declare public Variables,A variable accessible from anywhere in the program.,public String name;,name = ''  # Global/public variable in a module
 2,Declare private Variables,A variable accessible only within the same class.,private int age;,self.__age = 0  # Name mangling for 'private'
 3,Declare protected Variables,A variable accessible within the same package and subclasses.,protected double salary;,self._salary = 0.0  # Convention for 'protected'
