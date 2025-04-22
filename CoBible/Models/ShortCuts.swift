@@ -8,10 +8,10 @@ final class Shortcut {
     var number: Int
     var title: String
     var explanation: String
-    var javaCode: String? // Make optional to avoid migration issues
-    var pythonCode: String? // Make optional to avoid migration issues
+    var javaCode: String // Java code snippet
+    var pythonCode: String // Python code snippet
 
-    init(number: Int, title: String, explanation: String, javaCode: String?, pythonCode: String?) {
+    init(number: Int, title: String, explanation: String, javaCode: String, pythonCode: String) {
         self.id = UUID()
         self.number = number
         self.title = title
@@ -31,10 +31,10 @@ final class ShortcutDataManager {
 
         // Read data from CSV file
         guard let csvPath = Bundle.main.path(forResource: "shortcuts", ofType: "csv"),
-              let csvContent = try? String(contentsOfFile: csvPath) else {
-            print("Failed to load shortcuts.csv")
-            return
-        }
+                      let csvContent = try? String(contentsOfFile: csvPath, encoding: .utf8) else {
+                    print("Failed to load shortcuts.csv")
+                    return
+                }
 
         let rows = csvContent.split(separator: "\n")
         for row in rows.dropFirst() { // Skip the header row

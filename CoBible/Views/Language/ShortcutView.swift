@@ -39,7 +39,10 @@ struct ShortcutView: View {
 
                 // List of shortcuts
                 ForEach(filteredShortcuts) { shortcut in
-                    ShortcutCardView(shortcut: shortcut)
+                    NavigationLink(destination: ShortcutDetailView(shortcutTitle: shortcut.title, selectedLanguage: languageName)) {
+                        ShortcutCardView(shortcut: shortcut)
+                    }
+                    
                 }
             }
             .padding(.horizontal)
@@ -108,6 +111,7 @@ struct ShortcutCardView: View {
             Text(shortcut.title)
                 .font(.custom("LexendDeca-Black", size: 20))
                 .bold()
+                .foregroundColor(.black)
             Text(shortcut.explanation)
                 .font(.custom("LexendDeca-Regular", size: 16))
                 .foregroundColor(.gray)

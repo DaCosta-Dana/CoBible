@@ -3,7 +3,6 @@ import SwiftData
 
 struct ShortcutDetailView: View {
     var shortcutTitle: String
-    var languageName: String
     var selectedLanguage: String // Pass the selected language
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.modelContext) var context
@@ -34,7 +33,7 @@ struct ShortcutDetailView: View {
                             .bold()
                             .padding(.bottom, 5)
 
-                        Text((selectedLanguage == "Java" ? shortcut.javaCode : shortcut.pythonCode)!)
+                        Text(selectedLanguage == "Java" ? shortcut.javaCode : shortcut.pythonCode)
                             .font(.custom("LexendDeca-Regular", size: 16))
                             .foregroundColor(.black)
                             .padding()
@@ -42,8 +41,10 @@ struct ShortcutDetailView: View {
                             .clipShape(RoundedRectangle(cornerRadius: 10))
                     }
                     .padding(.horizontal)
+                    .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 .padding(.bottom, 20)
+                .frame(maxWidth: .infinity, alignment: .leading)
             } else {
                 // Loading or error state
                 Text("Loading...")
@@ -52,56 +53,20 @@ struct ShortcutDetailView: View {
                     .padding(.top, 50)
             }
         }
-        .background(
-            LinearGradient(gradient: Gradient(colors: [Color.white, Color(UIColor.systemGray6)]), startPoint: .top, endPoint: .bottom)
-                .edgesIgnoringSafeArea(.all)
-        )
-        .overlay(
-            VStack {
-                Spacer()
-                HStack(spacing: 100) {
-                    NavigationLink(destination: LanguageDetailView(
-                        languageName: languageName == "Java" ? "Python" : "Java",
-                        imageName: languageName == "Java" ? "python-logo" : "java-logo"
-                    )) {
-                        VStack {
-                            Image(systemName: "house.fill")
-                                .font(.system(size: 24))
-                            Text("Home")
-                                .font(.custom("LexendDeca-Regular", size: 12))
-                        }
-                    }
-
-                    NavigationLink(destination: Text("Profile View").font(.largeTitle)) {
-                        VStack {
-                            Image(systemName: "person.fill")
-                                .font(.system(size: 24))
-                                
-                            Text("Profile")
-                                .font(.custom("LexendDeca-Regular", size: 12))
-                        }
-                    }
-
-                    NavigationLink(destination: HomeChoice()) {
-                        VStack {
-                            Image(systemName: "globe")
-                                .font(.system(size: 24))
-                            Text("Language")
-                                .font(.custom("LexendDeca-Regular", size: 12))
-                        }
+        
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button(action: {
+                    presentationMode.wrappedValue.dismiss()
+                }) {
+                    HStack {
+                        Image(systemName: "chevron.left")
+                        Text("Back")
+                            .font(.custom("LexendDeca-Black", size: 16))
                     }
                 }
-                .padding(.horizontal, 100)
-                .padding(.vertical, -10)
-                .frame(maxWidth: .infinity)
-                .background(BlurView(style: .systemThinMaterial)) // Effet de flou
-                .clipShape(RoundedRectangle(cornerRadius: 20))
-                .shadow(radius: 7)
-                //.padding(.bottom, 1)
             }
-            .edgesIgnoringSafeArea(.bottom),
-            alignment: .bottom
-        )
+        }
         .navigationBarBackButtonHidden(true)
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
@@ -110,27 +75,10 @@ struct ShortcutDetailView: View {
     }
 }
 
-// Extension to find navigation controller
-extension UIViewController {
-    func findNavigationController() -> UINavigationController? {
-        if let nav = self as? UINavigationController {
-            return nav
-        }
-        
-        for child in children {
-            if let nav = child.findNavigationController() {
-                return nav
-            }
-        }
-        
-        return nil
-    }
-}
-
 // ✅ Preview
 struct ShortcutDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        ShortcutDetailView(shortcutTitle: "Print", languageName: "Java", selectedLanguage: "Java")
+        ShortcutDetailView(shortcutTitle: "Print", selectedLanguage: "Java")
             .modelContainer(for: Shortcut.self)
     }
 }
