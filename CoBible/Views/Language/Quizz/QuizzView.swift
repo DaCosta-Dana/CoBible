@@ -1,120 +1,180 @@
 import SwiftUI
+import SwiftData
 
 struct QuizzView: View {
-    @State private var currentQuestionIndex: Int = 0
-    @State private var selectedAnswer: String? = nil
-    @State private var showResult: Bool = false
-    @State private var score: Int = 0
-
-    let questions: [QuizzQuestion] = QuizzDataManager.loadQuestions()
-
+    @Environment(\.modelContext) private var modelContext
+    @State private var currentLanguage: String
+    @State private var questions: [Quizz] = []
+    @State private var currentQuestionIndex = 0
+    @State private var selectedOption: String?
+    @State private var showingFeedback = false
+    @State private var isCorrect = false
+    @State private var score = 0
+    
+    
+    init(language: String) {
+        self._currentLanguage = State(initialValue: language)
+    }
+    
     var body: some View {
-        VStack(spacing: 20) {
-            if currentQuestionIndex < questions.count {
-                // Display question
-                Text(questions[currentQuestionIndex].question)
-                    .font(.custom("LexendDeca-Black", size: 24))
-                    .multilineTextAlignment(.center)
+        VStack {
+            if questions.isEmpty {
+                Text("No questions available for \(currentLanguage)")
                     .padding()
-
-                // Display options
-                ForEach(questions[currentQuestionIndex].options, id: \.self) { option in
-                    Button(action: {
-                        selectedAnswer = option
-                        checkAnswer()
-                    }) {
-                        Text(option)
-                            .font(.custom("LexendDeca-Regular", size: 18))
-                            .padding()
-                            .frame(maxWidth: .infinity)
-                            .background(selectedAnswer == option ? Color.blue.opacity(0.7) : Color.gray.opacity(0.2))
-                            .foregroundColor(.black)
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
-                            .shadow(radius: 5)
-                    }
-                }
-
-                Spacer()
-
-                // Next button
-                Button(action: {
-                    nextQuestion()
-                }) {
-                    Text("Next")
-                        .font(.custom("LexendDeca-Black", size: 18))
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.green)
-                        .foregroundColor(.white)
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                        .shadow(radius: 5)
-                }
-                .padding(.horizontal)
+            } else if currentQuestionIndex < questions.count {
+                quizContent
             } else {
-                // Display result
-                Text("Quiz Completed!")
-                    .font(.custom("LexendDeca-Black", size: 24))
-                Text("Your Score: \(score)/\(questions.count)")
-                    .font(.custom("LexendDeca-Regular", size: 18))
-                    .padding()
-
-                Button(action: {
-                    resetQuiz()
-                }) {
-                    Text("Restart")
-                        .font(.custom("LexendDeca-Black", size: 18))
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                        .shadow(radius: 5)
-                }
-                .padding(.horizontal)
+                quizCompleted
             }
         }
-        .padding()
-        .navigationTitle("Quiz")
-        .navigationBarTitleDisplayMode(.inline)
+        .navigationTitle("\(currentLanguage) Quiz")
+        .onAppear {
+            loadQuestions()
+        }
     }
-
-    private func checkAnswer() {
-        if selectedAnswer == questions[currentQuestionIndex].correctAnswer {
+    
+    private var quizContent: some View {
+        let currentQuestion = questions[currentQuestionIndex]
+        
+        return VStack(spacing: 20) {
+            Text("Question \(currentQuestionIndex + 1) of \(questions.count)")
+                .font(.headline)
+                .padding()
+            
+            Text(currentQuestion.question)
+                .font(.title2)
+                .padding()
+                .multilineTextAlignment(.center)
+            
+            VStack(spacing: 15) {
+                optionButton(option: currentQuestion.optionA, label: "A")
+                optionButton(option: currentQuestion.optionB, label: "B")
+                optionButton(option: currentQuestion.optionC, label: "C")
+                optionButton(option: currentQuestion.optionD, label: "D")
+            }
+            
+            if showingFeedback {
+                Text(isCorrect ? "Correct!" : "Incorrect!")
+                    .font(.title)
+                    .foregroundColor(isCorrect ? .green : .red)
+                    .padding()
+                
+                Button("Next Question") {
+                    nextQuestion()
+                }
+                .padding()
+                .background(Color.blue)
+                .foregroundColor(.white)
+                .cornerRadius(10)
+            }
+            
+            Text("Score: \(score)")
+                .font(.headline)
+                .padding()
+        }
+        .padding()
+    }
+    
+    private var quizCompleted: some View {
+        VStack(spacing: 20) {
+            Text("Quiz Completed!")
+                .font(.title)
+                .padding()
+            
+            Text("Your final score is \(score) out of \(questions.count)")
+                .font(.headline)
+                .padding()
+            
+            Button("Restart Quiz") {
+                resetQuiz()
+            }
+            .padding()
+            .background(Color.blue)
+            .foregroundColor(.white)
+            .cornerRadius(10)
+        }
+        .padding()
+    }
+    
+    private func optionButton(option: String, label: String) -> some View {
+        Button(action: {
+            if !showingFeedback {
+                checkAnswer(selected: label)
+            }
+        }) {
+            HStack {
+                Text("\(label): ")
+                    .font(.headline)
+                    .foregroundColor(.white)
+                
+                Text(option)
+                    .foregroundColor(.white)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding()
+            .background(
+                selectedOption == label 
+                ? (showingFeedback 
+                   ? (isCorrect ? Color.green : Color.red) 
+                   : Color.blue.opacity(0.8))
+                : Color.blue.opacity(0.5)
+            )
+            .cornerRadius(10)
+        }
+    }
+    
+    private func loadQuestions() {
+        questions = QuizzDataManager.fetchQuizzByLanguage(language: currentLanguage, context: modelContext)
+        questions.shuffle() // Randomize question order
+        resetQuiz()
+    }
+    
+    private func checkAnswer(selected: String) {
+        selectedOption = selected
+        showingFeedback = true
+        
+        let currentQuestion = questions[currentQuestionIndex]
+        isCorrect = selected == currentQuestion.answer
+        
+        if isCorrect {
             score += 1
         }
     }
-
+    
     private func nextQuestion() {
-        selectedAnswer = nil
         currentQuestionIndex += 1
+        selectedOption = nil
+        showingFeedback = false
     }
-
+    
     private func resetQuiz() {
         currentQuestionIndex = 0
         score = 0
-        selectedAnswer = nil
+        selectedOption = nil
+        showingFeedback = false
     }
 }
 
-struct QuizzQuestion {
-    let question: String
-    let options: [String]
-    let correctAnswer: String
-}
-
-final class QuizzDataManager {
-    static func loadQuestions() -> [QuizzQuestion] {
-        // Replace this with actual data loading logic (e.g., from a CSV or database)
-        return [
-            QuizzQuestion(question: "What is the size of an int in Java?", options: ["2 bytes", "4 bytes", "8 bytes", "16 bytes"], correctAnswer: "4 bytes"),
-            QuizzQuestion(question: "Which keyword is used to inherit a class in Java?", options: ["this", "super", "extends", "implements"], correctAnswer: "extends"),
-            // Add more questions here...
-        ]
-    }
-}
-
-struct QuizzView_Previews: PreviewProvider {
-    static var previews: some View {
-        QuizzView()
+#Preview {
+    do {
+        let config = ModelConfiguration(isStoredInMemoryOnly: true)
+        let container = try ModelContainer(for: Quizz.self, configurations: config)
+        
+        // Add some sample data for the preview
+        let sampleQuizz = Quizz(
+            language: "Java",
+            question: "What is the size of an int in Java?",
+            optionA: "2 bytes",
+            optionB: "4 bytes",
+            optionC: "8 bytes",
+            optionD: "16 bytes",
+            answer: "B"
+        )
+        container.mainContext.insert(sampleQuizz)
+        
+        return QuizzView(language: "Java")
+            .modelContainer(container)
+    } catch {
+        return Text("Failed to create preview: \(error.localizedDescription)")
     }
 }

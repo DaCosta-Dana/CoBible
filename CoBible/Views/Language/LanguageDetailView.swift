@@ -35,7 +35,7 @@ struct LanguageDetailView: View {
 
                     // Navigation to QuizzView
                     NavigationLink(
-                        destination: QuizzView()
+                        destination: QuizzView(language: languageName)
                     ) {
                         OptionCardView(optionName: "Quizzes", iconName: "questionmark.circle.fill", color: .green)
                             .foregroundColor(.black)
