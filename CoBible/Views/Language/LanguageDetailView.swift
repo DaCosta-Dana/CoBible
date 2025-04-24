@@ -33,8 +33,15 @@ struct LanguageDetailView: View {
                             .foregroundColor(.black)
                     }
 
-                    // Placeholder for other options
-                    OptionCardView(optionName: "Quizzes", iconName: "questionmark.circle.fill", color: .green)
+                    // Navigation to QuizzView
+                    NavigationLink(
+                        destination: QuizzView()
+                    ) {
+                        OptionCardView(optionName: "Quizzes", iconName: "questionmark.circle.fill", color: .green)
+                            .foregroundColor(.black)
+                    }
+
+                    // Placeholder for Flashcards
                     OptionCardView(optionName: "Flashcards", iconName: "rectangle.stack.fill", color: .orange)
                 }
                 .padding(.horizontal)
