@@ -1,71 +1,92 @@
 import Foundation
-import SwiftData
 
-@Model
-final class Quizz {
-    var id: UUID
-    var language: String
-    var question: String
-    var optionA: String
-    var optionB: String
-    var optionC: String
-    var optionD: String
-    var answer: String
-
-    init(language: String, question: String, optionA: String, optionB: String, optionC: String, optionD: String, answer: String) {
-        self.id = UUID()
-        self.language = language
-        self.question = question
-        self.optionA = optionA
-        self.optionB = optionB
-        self.optionC = optionC
-        self.optionD = optionD
-        self.answer = answer
+struct Question: Identifiable {
+    let id = UUID()
+    let language: String
+    let questionText: String
+    let options: [String]
+    let correctAnswer: String
+    
+    // Convert letter answer (A, B, C, D) to index (0, 1, 2, 3)
+    var correctAnswerIndex: Int {
+        switch correctAnswer {
+        case "A": return 0
+        case "B": return 1
+        case "C": return 2
+        case "D": return 3
+        default: return 0
+        }
     }
 }
 
-final class QuizzDataManager {
-    static func populateQuizz(context: ModelContext) {
-        // Check if any Quizz objects already exist
-        let fetchDescriptor = FetchDescriptor<Quizz>()
-        if let existingQuizz = try? context.fetch(fetchDescriptor), !existingQuizz.isEmpty {
-            return // Data already exists, skip insertion
-        }
-
-        // Read data from CSV file
-        guard let csvPath = Bundle.main.path(forResource: "quizz", ofType: "csv"),
-              let csvContent = try? String(contentsOfFile: csvPath, encoding: .utf8) else {
-            print("Failed to load quizz.csv")
+class Quizz {
+    static let shared = Quizz() // Singleton for easy access
+    
+    private(set) var allQuestions: [Question] = []
+    private(set) var isLoaded = false
+    
+    private init() {
+        loadQuestions()
+    }
+    
+    private func loadQuestions() {
+        guard let path = Bundle.main.path(forResource: "quizz", ofType: "csv") else {
+            print("Failed to find quizz.csv")
             return
         }
-
-        let rows = csvContent.split(separator: "\n")
-        for row in rows.dropFirst() { // Skip the header row
-            let columns = row.split(separator: ",", omittingEmptySubsequences: false)
-            guard columns.count >= 7 else { continue }
-            let language = String(columns[0].trimmingCharacters(in: .whitespaces))
-            let question = String(columns[1].trimmingCharacters(in: .whitespaces))
-            let optionA = String(columns[2].trimmingCharacters(in: .whitespaces))
-            let optionB = String(columns[3].trimmingCharacters(in: .whitespaces))
-            let optionC = String(columns[4].trimmingCharacters(in: .whitespaces))
-            let optionD = String(columns[5].trimmingCharacters(in: .whitespaces))
-            let answer = String(columns[6].trimmingCharacters(in: .whitespaces))
-
-            let quizz = Quizz(
-                language: language,
-                question: question,
-                optionA: optionA,
-                optionB: optionB,
-                optionC: optionC,
-                optionD: optionD,
-                answer: answer
-            )
-            context.insert(quizz)
+        
+        do {
+            let content = try String(contentsOfFile: path, encoding: .utf8)
+            let rows = content.components(separatedBy: .newlines)
+            
+            // Skip the header row
+            for i in 1..<rows.count {
+                let row = rows[i]
+                if row.isEmpty { continue }
+                
+                let columns = row.components(separatedBy: ",")
+                if columns.count >= 7 {
+                    let language = columns[0]
+                    let questionText = columns[1]
+                    let options = [columns[2], columns[3], columns[4], columns[5]]
+                    let correctAnswer = columns[6]
+                    
+                    let question = Question(
+                        language: language,
+                        questionText: questionText,
+                        options: options,
+                        correctAnswer: correctAnswer
+                    )
+                    
+                    allQuestions.append(question)
+                }
+            }
+            
+            isLoaded = true
+            print("Successfully loaded \(allQuestions.count) questions")
+        } catch {
+            print("Error loading quizz.csv: \(error)")
         }
     }
-
-    static func fetchQuizzByLanguage(language: String, context: ModelContext) -> [Quizz] {
-        let fetchDescriptor = FetchDescriptor<Quizz>(predicate: #Predicate { $0.language == language })
-        return (try? context.fetch(fetchDescriptor)) ?? []
+    
+    // Get 10 random questions (or fewer if not enough are available)
+    func getRandomQuestions(count: Int = 10) -> [Question] {
+        guard isLoaded else { return [] }
+        let shuffledQuestions = allQuestions.shuffled()
+        return Array(shuffledQuestions.prefix(min(count, shuffledQuestions.count)))
+    }
+    
+    // Get random questions for a specific programming language
+    func getRandomQuestionsForLanguage(language: String, count: Int = 10) -> [Question] {
+        guard isLoaded else { return [] }
+        let languageQuestions = allQuestions.filter { $0.language == language }
+        let shuffledQuestions = languageQuestions.shuffled()
+        return Array(shuffledQuestions.prefix(min(count, shuffledQuestions.count)))
+    }
+    
+    // Get list of available programming languages
+    func getAvailableLanguages() -> [String] {
+        guard isLoaded else { return [] }
+        return Array(Set(allQuestions.map { $0.language })).sorted()
     }
 }

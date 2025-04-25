@@ -22,7 +22,7 @@ struct CoBibleApp: App {
                 .onAppear {
                     let context = sharedModelContainer.mainContext
                     ShortcutDataManager.populateShortcuts(context: context)
-                    QuizzDataManager.populateQuizz(context: context) // <-- add this line
+                    
                 }
         }
         .modelContainer(sharedModelContainer)
