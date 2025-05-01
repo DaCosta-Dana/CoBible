@@ -103,7 +103,7 @@ struct QuizzView: View {
     private var questionView: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text(getCurrentQuestion().questionText)
-                .font(.custom("LexendDeca-Black", size: 18)) // Updated font
+                .font(.custom("LexendDeca-ExtraBold", size: 18)) // Updated font
                 .fontWeight(.medium)
                 .fixedSize(horizontal: false, vertical: true)
                 .padding()
@@ -130,7 +130,7 @@ struct QuizzView: View {
                             .foregroundColor(.white)
                         
                         Text(getCurrentQuestion().options[index])
-                            .font(.custom("LexendDeca-Black", size: 16)) // Updated font
+                            .font(.custom("LexendDeca-ExtraBold", size: 16)) // Updated font
                             .fixedSize(horizontal: false, vertical: true)
                             .foregroundColor(.primary)
                         
