@@ -1,0 +1,40 @@
+#id,language,term,description,example
+1,Java,Print statement,"Outputs text to the console using System.out.println()","System.out.println(\"Hello, World!\");"
+2,Python,Print statement,"Outputs text to the console using the print() function","print(\"Hello, World!\")"
+3,Java,Main method,"Entry point for Java applications","public static void main(String[] args) { }"
+4,Python,Main check,"Python uses if __name__ == '__main__' to define the entry point","if __name__ == '__main__':"
+5,Java,Variable declaration,"Variables need a type and semicolon","int number = 10;"
+6,Python,Variable declaration,"No need to specify type","number = 10"
+7,Java,For loop,"A loop that runs a fixed number of times","for(int i = 0; i < 5; i++) { }"
+8,Python,For loop,"Looping over a range or iterable","for i in range(5):"
+9,Java,If statement,"Conditional branching with boolean expressions","if (x > 5) { }"
+10,Python,If statement,"Uses indentation and colon","if x > 5:"
+11,Java,String concatenation,"Use + to combine strings","\"Hello\" + \" World\""
+12,Python,String concatenation,"Use + to combine strings","\"Hello\" + \" World\""
+13,Java,Method definition,"Define functions with return type and name","public int add(int a, int b) { return a + b; }"
+14,Python,Function definition,"Use def keyword and indentation","def add(a, b): return a + b"
+15,Java,Comments,"Single-line comments use //","// This is a comment"
+16,Python,Comments,"Single-line comments use #","# This is a comment"
+17,Java,Import statement,"Use import to include libraries","import java.util.Scanner;"
+18,Python,Import statement,"Use import to include modules","import math"
+19,Java,Array declaration,"Fixed-size list of elements","int[] nums = new int[5];"
+20,Python,List declaration,"Dynamic list using []","nums = [1, 2, 3]"
+21,Java,Dictionary declaration,"Key-value pairs using HashMap","HashMap<String, Integer> map = new HashMap<>();"
+22,Python,What keyword is used to define a function?,multiple_choice,class,function,def,init,def
+23,Both,Which of these is a valid way to output text?,multiple_choice,System.out.println(),echo(),console.write(),print(),System.out.println()
+24,Python,How do you write a comment in Python?,multiple_choice,//,#,--,/** */,#
+25,Java,What is the entry point method in Java?,multiple_choice,public void run(),start(),main(),init(),main()
+26,Python,What does the 'if __name__ == "__main__":' line do?,multiple_choice,Declares a class,Runs code only if script is executed directly,Defines a function,Runs a loop,Runs code only if script is executed directly
+27,Java,What is the correct syntax to declare an integer variable?,multiple_choice,var x = 5,int x = 5,int x == 5,x int = 5,int x = 5
+28,Python,How do you create a list with 3 elements?,fill_in_blank,,[1, 2, 3]
+29,Both,What is the purpose of a loop?,multiple_choice,Run code once,Repeat code,Pause code,Stop code,Repeat code
+30,Both,What does a condition inside an if statement evaluate to?,multiple_choice,String,Boolean,Integer,List,Boolean
+31,Java,Which symbol is used to end a statement?,multiple_choice,:,.,;,),;
+32,Python,Which keyword is used to define a loop over a sequence?,multiple_choice,for,loop,while,repeat,for
+33,Both,A variable stores ____,fill_in_blank,,data
+34,Java,How do you import the Scanner class?,fill_in_blank,,import java.util.Scanner;
+35,Python,What function returns the length of a list?,fill_in_blank,,len()
+36,Python,Dictionary declaration,"Key-value pairs using {}","map = {'key': 'value'}"
+37,Java,Exception handling,"Use try-catch blocks to handle errors","try { } catch (Exception e) { }"
+38,Python,Exception handling,"Use try-except blocks to handle errors","try:\n    pass\nexcept Exception as e:\n    pass"id,language,question,type,options,answer
+39,Java,What keyword is used to define a class?,multiple_choice,class,def,function,static,class
