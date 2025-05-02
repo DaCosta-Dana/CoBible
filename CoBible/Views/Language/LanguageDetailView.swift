@@ -41,8 +41,13 @@ struct LanguageDetailView: View {
                             .foregroundColor(.black)
                     }
 
-                    // Placeholder for Flashcards
-                    OptionCardView(optionName: "Flashcards", iconName: "rectangle.stack.fill", color: .orange)
+                    // Navigation to FlashcardMenuView
+                    NavigationLink(
+                        destination: FlashcardMenuView(selectedLanguage: languageName)
+                    ) {
+                        OptionCardView(optionName: "Flashcards", iconName: "rectangle.stack.fill", color: .orange)
+                            .foregroundColor(.black)
+                    }
                 }
                 .padding(.horizontal)
 
