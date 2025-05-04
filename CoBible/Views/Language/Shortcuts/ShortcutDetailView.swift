@@ -9,6 +9,7 @@ struct SyntaxHighlightedWebView: UIViewRepresentable {
 
     func makeUIView(context: Context) -> WKWebView {
         let webView = WKWebView()
+        let formattedCode = code.replacingOccurrences(of: "\n", with: "<br>") // Replace \n with <br> for line breaks in HTML
         let html = """
         <html>
         <head>
@@ -28,7 +29,7 @@ struct SyntaxHighlightedWebView: UIViewRepresentable {
         </style>
         </head>
         <body>
-        <pre><code class="\(language)">\(code)</code></pre>
+        <pre><code class="\(language)">\(formattedCode)</code></pre>
         <script>hljs.highlightAll();</script>
         </body>
         </html>
@@ -120,4 +121,3 @@ struct ShortcutDetailView_Previews: PreviewProvider {
             .modelContainer(for: Shortcut.self)
     }
 }
-
