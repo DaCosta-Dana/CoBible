@@ -1,6 +1,5 @@
 //
 //  CoBibleUITests.swift
-//  CoBibleUITests
 //
 //  Created by Erwan Weinmann on 03/03/2025.
 // AND created by Trâm Anh VO on 05/04/2025
