@@ -2,7 +2,7 @@ import SwiftUI
 import SwiftData
 import WebKit
 
-// WebView to show syntax-highlighted code
+
 struct SyntaxHighlightedWebView: UIViewRepresentable {
     var code: String
     var language: String
