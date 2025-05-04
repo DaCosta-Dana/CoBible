@@ -1,13 +1,53 @@
 import SwiftUI
 import SwiftData
+import WebKit
+
+// WebView to show syntax-highlighted code
+struct SyntaxHighlightedWebView: UIViewRepresentable {
+    var code: String
+    var language: String
+
+    func makeUIView(context: Context) -> WKWebView {
+        let webView = WKWebView()
+        let html = """
+        <html>
+        <head>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+        <style>
+            body {
+                font-size: 24px; /* Larger font size for the code */
+            }
+            pre {
+                font-size: 24px; /* Larger font size for preformatted text */
+                padding: 15px;
+                background-color: #2e2e2e; /* Dark background for code */
+                border-radius: 10px; /* Rounded corners */
+                overflow-x: auto;
+            }
+        </style>
+        </head>
+        <body>
+        <pre><code class="\(language)">\(code)</code></pre>
+        <script>hljs.highlightAll();</script>
+        </body>
+        </html>
+        """
+        webView.loadHTMLString(html, baseURL: nil)
+        return webView
+    }
+
+    func updateUIView(_ uiView: WKWebView, context: Context) {}
+}
 
 struct ShortcutDetailView: View {
     var shortcutTitle: String
-    var selectedLanguage: String // Pass the selected language
+    var selectedLanguage: String
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.modelContext) var context
 
     @State private var shortcut: Shortcut?
+    @State private var codeToDisplay: String = ""
 
     var body: some View {
         ScrollView {
@@ -33,12 +73,11 @@ struct ShortcutDetailView: View {
                             .bold()
                             .padding(.bottom, 5)
 
-                        Text(selectedLanguage == "Java" ? shortcut.javaCode : shortcut.pythonCode)
-                            .font(.custom("LexendDeca-Regular", size: 16))
-                            .foregroundColor(.black)
+                        // Show syntax-highlighted code
+                        SyntaxHighlightedWebView(code: selectedLanguage == "Java" ? shortcut.javaCode : shortcut.pythonCode, language: selectedLanguage)
+                            .frame(height: 400) // Increased height for better visibility
                             .padding()
-                            .background(Color(UIColor.systemGray6))
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                            .clipShape(RoundedRectangle(cornerRadius: 15)) // Rounded corners for the code container
                     }
                     .padding(.horizontal)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -75,10 +114,10 @@ struct ShortcutDetailView: View {
     }
 }
 
-// ✅ Preview
 struct ShortcutDetailView_Previews: PreviewProvider {
     static var previews: some View {
         ShortcutDetailView(shortcutTitle: "Print", selectedLanguage: "Java")
             .modelContainer(for: Shortcut.self)
     }
 }
+
