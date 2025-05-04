@@ -1,7 +1,6 @@
 import SwiftUI
 import SwiftData
 
-//Main entry point of the CoBible app
 @main
 struct CoBibleApp: App {
     //Shared ModelContainer for managing app data
