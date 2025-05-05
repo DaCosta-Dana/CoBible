@@ -1,5 +1,4 @@
 
-//
 //  CoBibleUITestsLaunchTests.swift
 //
 //  Created by Erwan Weinmann on 03/03/2025.
