@@ -2,7 +2,7 @@ import SwiftUI
 import SwiftData
 import WebKit
 
-
+// WebView to show syntax-highlighted code
 struct SyntaxHighlightedWebView: UIViewRepresentable {
     var code: String
     var language: String
@@ -14,15 +14,17 @@ struct SyntaxHighlightedWebView: UIViewRepresentable {
         <html>
         <head>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-light.min.css">
         <style>
             body {
-                font-size: 24px; /* Larger font size for the code */
+                font-size: 40px; /* Larger font size for the code */
             }
             pre {
                 font-size: 24px; /* Larger font size for preformatted text */
+                background-color: #ffffff;
+                color: #000000;
                 padding: 15px;
-                background-color: #2e2e2e; /* Dark background for code */
+                background-color: #f5f5f5; /* Light background */
                 border-radius: 10px; /* Rounded corners */
                 overflow-x: auto;
             }
