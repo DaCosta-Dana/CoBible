@@ -9,7 +9,7 @@ struct SyntaxHighlightedWebView: UIViewRepresentable {
 
     func makeUIView(context: Context) -> WKWebView {
         let webView = WKWebView()
-        let formattedCode = code.replacingOccurrences(of: "\n", with: "<br>") // Replace \n with <br> for line breaks in HTML
+        let formattedCode = code.replacingOccurrences(of: "\\n", with: "\n")
         let html = """
         <html>
         <head>
