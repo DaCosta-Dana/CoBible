@@ -1,4 +1,4 @@
-//
+
 //  CoBibleTests.swift
 //  CoBibleTests
 //
