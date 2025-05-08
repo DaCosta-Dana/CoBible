@@ -15,9 +15,9 @@ struct ShortcutView: View {
 
     var filteredShortcuts: [Shortcut] {
         if searchText.isEmpty {
-            return shortcuts.filter { $0.language == currentLanguage }
+            return shortcuts
         } else {
-            return shortcuts.filter { $0.language == currentLanguage && $0.title.localizedCaseInsensitiveContains(searchText) }
+            return shortcuts.filter { $0.title.localizedCaseInsensitiveContains(searchText) }
         }
     }
 
