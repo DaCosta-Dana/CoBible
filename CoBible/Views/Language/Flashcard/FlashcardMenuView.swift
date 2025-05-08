@@ -45,8 +45,8 @@ struct FlashcardMenuView: View {
         }
 
         var groups: [String: FlashcardGroup] = [:]
-
         let rows = csvContent.split(separator: "\n")
+
         for row in rows.dropFirst() { // Skip the header row
             let columns = row.split(separator: ",")
             guard columns.count >= 5 else { continue } // Ensure valid row format
