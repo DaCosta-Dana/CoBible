@@ -1,42 +1,42 @@
 #id,language,term/question,answer,group
-1,Java,How do you print text in Java?,"System.out.println(\"Hello World!\")",Output
-2,Python,How do you print text in Python?,"print(\"Hello World!\")",Output
+1,Java,How do you print text?,"System.out.println(\"Hello World!\")",Output
+2,Python,How do you print text?,"print(\"Hello World!\")",Output
 3,Java,What is the entry point of a Java program?,"public static void main(String[] args)",Program Structure
-4,Python,How do you define the main execution block in Python?,"if __name__ == \"__main__\":",Program Structure
-5,Java,How do you declare an integer variable in Java?,"int number = 10;",Variables
-6,Python,How do you declare a variable in Python?,"number = 10",Variables
-7,Java,How do you write a for loop in Java?,"for(int i = 0; i < 5; i++) { }",Loops
-8,Python,How do you write a for loop in Python?,"for i in range(5):",Loops
-9,Java,How do you write an if statement in Java?,"if (x > 5) { }",Conditionals
-10,Python,How do you write an if statement in Python?,"if x > 5:",Conditionals
-11,Java,How do you concatenate strings in Java?,"\"Hello\" + \" World\"",Strings
-12,Python,How do you concatenate strings in Python?,"\"Hello\" + \" World\"",Strings
-13,Java,How do you define a method in Java?,"public int add(int a, int b) { return a + b; }",Functions
-14,Python,How do you define a function in Python?,"def add(a, b): return a + b",Functions
-15,Java,How do you write a comment in Java?,"// This is a comment",Syntax
-16,Python,How do you write a comment in Python?,"# This is a comment",Syntax
-17,Java,How do you import the Scanner class in Java?,"import java.util.Scanner;",Imports
-18,Python,How do you import a module in Python?,"import math",Imports
-19,Java,How do you declare an array in Java?,"int[] nums = new int[5];",Data Structures
-20,Python,How do you declare a list in Python?,"nums = [1, 2, 3]",Data Structures
-21,Java,How do you declare a dictionary in Java?,"HashMap<String, Integer> map = new HashMap<>();",Data Structures
+4,Python,How do you define the main execution block ?,"if __name__ == \"__main__\":",Program Structure
+5,Java,How do you declare an integer variable ?,"int number = 10;",Variables
+6,Python,How do you declare a variable?,"number = 10",Variables
+7,Java,How do you write a for loop?,"for(int i = 0; i < 5; i++) { }",Loops
+8,Python,How do you write a for loop ?,"for i in range(5):",Loops
+9,Java,How do you write an if statement ?,"if (x > 5) { }",Conditionals
+10,Python,How do you write an if statement?,"if x > 5:",Conditionals
+11,Java,How do you concatenate strings ?,"\"Hello\" + \" World\"",Strings
+12,Python,How do you concatenate strings?,"\"Hello\" + \" World\"",Strings
+13,Java,How do you define a method?,"public int add(int a, int b) { return a + b; }",Functions
+14,Python,How do you define a function?,"def add(a, b): return a + b",Functions
+15,Java,How do you write a comment ?,"// This is a comment",Syntax
+16,Python,How do you write a comment?,"# This is a comment",Syntax
+17,Java,How do you import the Scanner class?,"import java.util.Scanner;",Imports
+18,Python,How do you import a module?,"import math",Imports
+19,Java,How do you declare an array ?,"int[] nums = new int[5];",Data Structures
+20,Python,How do you declare a list ?,"nums = [1, 2, 3]",Data Structures
+21,Java,How do you declare a dictionary?,"HashMap<String, Integer> map = new HashMap<>();",Data Structures
 22,Python,What keyword is used to define a function?,"def",Functions
 23,Java,Which of these is a valid way to output text?,"System.out.println()",Output
-24,Python,How do you write a comment in Python?,"#",Syntax
-25,Java,What is the entry point method in Java?,"main",Program Structure
+24,Python,How do you write a comment ?,"#",Syntax
+25,Java,What is the entry point method ,"main",Program Structure
 26,Python,What does 'if __name__ == "__main__":' do?,"Runs code only if script is executed directly",Program Structure
 27,Java,What is the correct syntax to declare an integer variable?,"int x = 5",Variables
 28,Python,How do you create a list with 3 elements?,"[1, 2, 3]",Data Structures
 29,Java,What is the purpose of a loop?,"Repeat code",Loops
 30,Java,What does a condition inside an if statement evaluate to?,"Boolean",Conditionals
-31,Java,Which symbol is used to end a statement in Java?,";",Syntax
+31,Java,Which symbol is used to end a statement?,";",Syntax
 32,Python,Which keyword is used to define a loop over a sequence?,"for",Loops
 33,Java,What does a variable store?,"data",Variables
 34,Java,How do you import the Scanner class?,"import java.util.Scanner;",Imports
 35,Python,What function returns the length of a list?,"len()",Data Structures
-36,Python,How do you declare a dictionary in Python?,"map = {'key': 'value'}",Data Structures
-37,Java,How do you handle exceptions in Java?,"try { } catch (Exception e) { }",Error Handling
-38,Python,How do you handle exceptions in Python?,"try:\n    pass\nexcept Exception as e:\n    pass",Error Handling
+36,Python,How do you declare a dictionary?,"map = {'key': 'value'}",Data Structures
+37,Java,How do you handle exceptions ?,"try { } catch (Exception e) { }",Error Handling
+38,Python,How do you handle exceptions?,"try:\n    pass\nexcept Exception as e:\n    pass",Error Handling
 39,Java,What keyword is used to define a class?,"class",Syntax
 40,Python,Which of these is a valid way to output text?,"System.out.println()",Output
 41,Python,What is the purpose of a loop?,"Repeat code",Loops
@@ -44,17 +44,17 @@
 43,Python,What does a variable store?,"data",Variables
 44,Java,How do you create a list with 3 elements?,"[1, 2, 3]",Data Structures
 45,Java,What function returns the length of an array?,"array.length",Data Structures
-46,Java,How do you declare a dictionary in Java?,"HashMap<String, Integer> map = new HashMap<>();",Data Structures
-47,Java,How do you handle exceptions in Java?,"try { } catch (Exception e) { }",Error Handling
-48,Python,How do you handle exceptions in Python?,"try:\n    pass\nexcept Exception as e:\n    pass",Error Handling
+46,Java,How do you declare a dictionary?,"HashMap<String, Integer> map = new HashMap<>();",Data Structures
+47,Java,How do you handle exceptions ?,"try { } catch (Exception e) { }",Error Handling
+48,Python,How do you handle exceptions?,"try:\n    pass\nexcept Exception as e:\n    pass",Error Handling
 49,Java,What keyword is used to define a class?,"class",Syntax
-50,Python,How do you define a class in Python?,"class MyClass:",Syntax
-51,Java,How do you create a new object in Java?,"MyClass obj = new MyClass();",Objects
-52,Python,How do you create a new object in Python?,"obj = MyClass()",Objects
-53,Java,How do you access an object's method in Java?,"obj.method()",Objects
-54,Python,How do you access an object's method in Python?,"obj.method()",Objects
-55,Java,How do you create a constructor in Java?,"public MyClass() { }",Objects
-56,Python,How do you create a constructor in Python?,"def __init__(self):",Objects
-57,Java,How do you create a subclass in Java?,"class SubClass extends SuperClass { }",Inheritance
-58,Python,How do you create a subclass in Python?,"class SubClass(SuperClass):",Inheritance
+50,Python,How do you define a class ?,"class MyClass:",Syntax
+51,Java,How do you create a new object?,"MyClass obj = new MyClass();",Objects
+52,Python,How do you create a new object ?,"obj = MyClass()",Objects
+53,Java,How do you access an object's method?,"obj.method()",Objects
+54,Python,How do you access an object's method?,"obj.method()",Objects
+55,Java,How do you create a constructor?,"public MyClass() { }",Objects
+56,Python,How do you create a constructor?,"def __init__(self):",Objects
+57,Java,How do you create a subclass ?,"class SubClass extends SuperClass { }",Inheritance
+58,Python,How do you create a subclass ?,"class SubClass(SuperClass):",Inheritance
 59,Java,How do you override a method in Java?,"@Override public void method() { }",Inheritance
