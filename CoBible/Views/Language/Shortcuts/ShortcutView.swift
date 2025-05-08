@@ -3,9 +3,10 @@ import SwiftData
 
 struct ShortcutView: View {
     var languageName: String
-    @Query var shortcuts: [Shortcut] // Fetch shortcuts from the database
-    @Environment(\.presentationMode) var presentationMode // For navigation back
-    @State private var searchText: String = "" // State for search text
+    @Query var shortcuts: [Shortcut]
+    @Environment(\.presentationMode) var presentationMode
+    @State private var showLanguageDetail = false
+    @State private var searchText: String = ""
 
     var filteredShortcuts: [Shortcut] {
         if searchText.isEmpty {
@@ -16,90 +17,62 @@ struct ShortcutView: View {
     }
 
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 20) {
-                // Page title
-                Text("\(languageName) Shortcuts")
-                    .font(.custom("LexendDeca-Black", size: 30))
-                    .bold()
-                    .padding(.top, 20)
-                    .padding(.horizontal)
-
-                // Search bar
-                HStack {
-                    Image(systemName: "magnifyingglass")
-                        .foregroundColor(.gray)
-                    TextField("Search shortcuts...", text: $searchText)
-                        .font(.custom("LexendDeca-Black", size: 16))
-                }
-                .padding(10)
-                .background(Color(UIColor.systemGray6))
-                .clipShape(RoundedRectangle(cornerRadius: 15))
-                .padding(.horizontal)
-
-                // List of shortcuts
-                ForEach(filteredShortcuts) { shortcut in
-                    NavigationLink(destination: ShortcutDetailView(shortcutTitle: shortcut.title, selectedLanguage: languageName)) {
-                        ShortcutCardView(shortcut: shortcut)
+        VStack(alignment: .leading, spacing: 20) {
+            HStack {
+                Button(action: { presentationMode.wrappedValue.dismiss() }) {
+                    HStack {
+                        Image(systemName: "chevron.left")
+                        Text("Back")
+                            .font(.custom("LexendDeca-Black", size: 16))
                     }
-                    
+                }
+                Spacer()
+                Button(action: { showLanguageDetail = true }) {
+                    Text(languageName == "Java" ? "Python" : "Java")
+                        .font(.custom("LexendDeca-Black", size: 16))
+                        .foregroundColor(.blue)
+                }
+                .sheet(isPresented: $showLanguageDetail) {
+                    LanguageDetailView(languageName: languageName == "Java" ? "Python" : "Java", imageName: languageName == "Java" ? "python-logo" : "java-logo")
                 }
             }
             .padding(.horizontal)
-            .padding(.bottom, 70) // Add padding at the bottom to give space for the navigation bar
+            .padding(.top, 10)
+
+            Text("\(languageName) Shortcuts")
+                .font(.custom("LexendDeca-Black", size: 30))
+                .bold()
+                .padding(.top, 20)
+                .padding(.horizontal)
+
+            HStack {
+                Image(systemName: "magnifyingglass")
+                    .foregroundColor(.gray)
+                TextField("Search shortcuts...", text: $searchText)
+                    .font(.custom("LexendDeca-Black", size: 16))
+            }
+            .padding(10)
+            .background(Color(UIColor.systemGray6))
+            .clipShape(RoundedRectangle(cornerRadius: 15))
+            .padding(.horizontal)
+
+            ScrollView {
+                VStack(spacing: 20) {
+                    ForEach(filteredShortcuts) { shortcut in
+                        NavigationLink(destination: ShortcutDetailView(shortcutTitle: shortcut.title, selectedLanguage: languageName)) {
+                            ShortcutCardView(shortcut: shortcut)
+                        }
+                    }
+                }
+                .padding(.horizontal)
+            }
+            Spacer()
         }
         .background(
             LinearGradient(gradient: Gradient(colors: [Color.white, Color(UIColor.systemGray6)]), startPoint: .top, endPoint: .bottom)
                 .edgesIgnoringSafeArea(.all)
         )
-        .overlay(
-            VStack {
-                Spacer()
-                HStack(spacing: 100) {
-                    NavigationLink(destination: LanguageDetailView(
-                        languageName: languageName == "Java" ? "Python" : "Java",
-                        imageName: languageName == "Java" ? "python-logo" : "java-logo"
-                    )) {
-                        VStack {
-                            Image(systemName: "house.fill")
-                                .font(.system(size: 24))
-                            Text("Home")
-                                .font(.custom("LexendDeca-Regular", size: 12))
-                        }
-                    }
-
-                    NavigationLink(destination: Text("Profile View").font(.largeTitle)) {
-                        VStack {
-                            Image(systemName: "person.fill")
-                                .font(.system(size: 24))
-                            Text("Profile")
-                                .font(.custom("LexendDeca-Regular", size: 12))
-                        }
-                    }
-
-                    NavigationLink(destination: HomeChoice()) {
-                        VStack {
-                            Image(systemName: "globe")
-                                .font(.system(size: 24))
-                            Text("Language")
-                                .font(.custom("LexendDeca-Regular", size: 12))
-                        }
-                    }
-                }
-                .padding(.vertical, 25)
-                .frame(maxWidth: .infinity)
-                .background(BlurView(style: .systemThinMaterial)) // Effet de flou
-                .clipShape(RoundedRectangle(cornerRadius: 20))
-                .padding(.horizontal, -100)
-                .shadow(radius: 7)
-                //.padding(.bottom, 1)
-            }
-            .edgesIgnoringSafeArea(.bottom),
-            alignment: .bottom
-        )
-
-        .navigationBarBackButtonHidden(true)
-        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarHidden(true)
     }
 }
 
@@ -135,10 +108,9 @@ struct BlurView: UIViewRepresentable {
     func updateUIView(_ uiView: UIVisualEffectView, context: Context) {}
 }
 
-
 struct ShortcutView_Previews: PreviewProvider {
     static var previews: some View {
         ShortcutView(languageName: "Java")
-            .modelContainer(for: Shortcut.self) // Provide a model container for preview
+            .modelContainer(for: Shortcut.self)
     }
 }
