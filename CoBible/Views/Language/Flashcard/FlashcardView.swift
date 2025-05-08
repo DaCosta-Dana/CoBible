@@ -87,26 +87,38 @@ struct FlashcardContentView: View {
 
     var body: some View {
         ZStack {
-            if isFlipped {
-                Text(card.answer)
-                    .font(.custom("LexendDeca-Regular", size: 20))
-                    .padding()
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .background(Color.orange.opacity(0.2))
-                    .clipShape(RoundedRectangle(cornerRadius: 20))
-                    .shadow(radius: 5)
-            } else {
-                Text(card.question)
-                    .font(.custom("LexendDeca-Regular", size: 20))
-                    .padding()
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .background(Color.blue.opacity(0.2))
-                    .clipShape(RoundedRectangle(cornerRadius: 20))
-                    .shadow(radius: 5)
+            // Front (question)
+            Group {
+                if !isFlipped {
+                    Text(card.question)
+                        .font(.custom("LexendDeca-Regular", size: 20))
+                        .padding()
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .background(Color.blue.opacity(0.2))
+                        .clipShape(RoundedRectangle(cornerRadius: 20))
+                        .shadow(radius: 5)
+                }
             }
+            .opacity(isFlipped ? 0 : 1)
+            .rotation3DEffect(.degrees(isFlipped ? 180 : 0), axis: (x: 0, y: 1, z: 0))
+
+            // Back (answer)
+            Group {
+                if isFlipped {
+                    Text(card.answer)
+                        .font(.custom("LexendDeca-Regular", size: 20))
+                        .padding()
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .background(Color.orange.opacity(0.2))
+                        .clipShape(RoundedRectangle(cornerRadius: 20))
+                        .shadow(radius: 5)
+                }
+            }
+            .opacity(isFlipped ? 1 : 0)
+            .rotation3DEffect(.degrees(isFlipped ? 0 : -180), axis: (x: 0, y: 1, z: 0))
         }
         .onTapGesture {
-            withAnimation(.easeInOut) {
+            withAnimation(.spring(response: 0.5, dampingFraction: 0.7)) {
                 isFlipped.toggle()
             }
         }
