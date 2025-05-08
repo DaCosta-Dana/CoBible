@@ -1,35 +1,39 @@
 import SwiftUI
-
+//hallloooo
 struct HomeChoice: View {
     var body: some View {
-        VStack(spacing: 20) {
-            // Header
-            Text("Choose the language")
-                .font(.custom("LexendDeca-Black", size: 32))
-                .bold()
-                .padding(.top, 40)
-                .padding(.bottom, 20)
-
-            // Language cards
+        NavigationView {
             VStack(spacing: 20) {
-                NavigationLink(destination: LanguageDetailView(languageName: "Java", imageName: "java-logo")) {
-                    LanguageCardView(imageName: "java-logo", languageName: "Java")
-                        .foregroundColor(.black)
+                // Header
+                Text("Choose the language")
+                    .font(.custom("LexendDeca-Black", size: 32))
+                    .bold()
+                    .padding(.top, 40)
+                    .padding(.bottom, 20)
+
+                // Language cards
+                VStack(spacing: 20) {
+                    NavigationLink(destination: LanguageDetailView(languageName: "Java", imageName: "java-logo")) {
+                        LanguageCardView(imageName: "java-logo", languageName: "Java")
+                            .foregroundColor(.black)
+                    }
+                    NavigationLink(destination: LanguageDetailView(languageName: "Python", imageName: "python-logo")) {
+                        LanguageCardView(imageName: "python-logo", languageName: "Python")
+                            .foregroundColor(.black)
+                    }
                 }
-                NavigationLink(destination: LanguageDetailView(languageName: "Python", imageName: "python-logo")) {
-                    LanguageCardView(imageName: "python-logo", languageName: "Python")
-                        .foregroundColor(.black)
-                }
+                .padding(.horizontal)
+
+                Spacer()
             }
             .padding(.horizontal)
-
-            Spacer()
+            .background(
+                LinearGradient(gradient: Gradient(colors: [Color.white, Color(UIColor.systemGray6)]), startPoint: .top, endPoint: .bottom)
+                    .edgesIgnoringSafeArea(.all)
+            )
         }
-        .padding(.horizontal)
-        .background(
-            LinearGradient(gradient: Gradient(colors: [Color.white, Color(UIColor.systemGray6)]), startPoint: .top, endPoint: .bottom)
-                .edgesIgnoringSafeArea(.all)
-        )
+        .navigationViewStyle(StackNavigationViewStyle())
+        .navigationBarBackButtonHidden(true)
     }
 }
 
