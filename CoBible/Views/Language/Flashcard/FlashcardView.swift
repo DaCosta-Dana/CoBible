@@ -68,15 +68,19 @@ struct FlashcardView: View {
 
     private func goToNextCard() {
         if currentIndex < cards.count - 1 {
+            withAnimation(.spring(response: 0.5, dampingFraction: 0.7)) {
+                isFlipped = false
+            }
             currentIndex += 1
-            isFlipped = false
         }
     }
 
     private func goToPreviousCard() {
         if currentIndex > 0 {
+            withAnimation(.spring(response: 0.5, dampingFraction: 0.7)) {
+                isFlipped = false
+            }
             currentIndex -= 1
-            isFlipped = false
         }
     }
 }
