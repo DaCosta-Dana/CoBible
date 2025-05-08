@@ -5,14 +5,19 @@ struct ShortcutView: View {
     var languageName: String
     @Query var shortcuts: [Shortcut]
     @Environment(\.presentationMode) var presentationMode
-    @State private var showLanguageDetail = false
     @State private var searchText: String = ""
+    @State private var currentLanguage: String
+
+    init(languageName: String) {
+        self.languageName = languageName
+        _currentLanguage = State(initialValue: languageName)
+    }
 
     var filteredShortcuts: [Shortcut] {
         if searchText.isEmpty {
-            return shortcuts
+            return shortcuts.filter { $0.language == currentLanguage }
         } else {
-            return shortcuts.filter { $0.title.localizedCaseInsensitiveContains(searchText) }
+            return shortcuts.filter { $0.language == currentLanguage && $0.title.localizedCaseInsensitiveContains(searchText) }
         }
     }
 
@@ -27,19 +32,18 @@ struct ShortcutView: View {
                     }
                 }
                 Spacer()
-                Button(action: { showLanguageDetail = true }) {
-                    Text(languageName == "Java" ? "Python" : "Java")
+                Button(action: {
+                    currentLanguage = (currentLanguage == "Java" ? "Python" : "Java")
+                }) {
+                    Text(currentLanguage == "Java" ? "Python" : "Java")
                         .font(.custom("LexendDeca-Black", size: 16))
                         .foregroundColor(.blue)
-                }
-                .sheet(isPresented: $showLanguageDetail) {
-                    LanguageDetailView(languageName: languageName == "Java" ? "Python" : "Java", imageName: languageName == "Java" ? "python-logo" : "java-logo")
                 }
             }
             .padding(.horizontal)
             .padding(.top, 10)
 
-            Text("\(languageName) Shortcuts")
+            Text("\(currentLanguage) Shortcuts")
                 .font(.custom("LexendDeca-Black", size: 30))
                 .bold()
                 .padding(.top, 20)
@@ -59,7 +63,7 @@ struct ShortcutView: View {
             ScrollView {
                 VStack(spacing: 20) {
                     ForEach(filteredShortcuts) { shortcut in
-                        NavigationLink(destination: ShortcutDetailView(shortcutTitle: shortcut.title, selectedLanguage: languageName)) {
+                        NavigationLink(destination: ShortcutDetailView(shortcutTitle: shortcut.title, selectedLanguage: currentLanguage)) {
                             ShortcutCardView(shortcut: shortcut)
                         }
                     }
