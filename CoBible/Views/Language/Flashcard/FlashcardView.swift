@@ -5,9 +5,23 @@ struct FlashcardView: View {
     @State private var currentIndex: Int = 0
     @State private var isFlipped: Bool = false
     @GestureState private var dragOffset: CGFloat = 0
+    @Environment(\.presentationMode) var presentationMode
 
     var body: some View {
         VStack {
+            HStack {
+                Button(action: { presentationMode.wrappedValue.dismiss() }) {
+                    HStack {
+                        Image(systemName: "chevron.left")
+                        Text("Back")
+                            .font(.custom("LexendDeca-Black", size: 16))
+                    }
+                }
+                Spacer()
+            }
+            .padding(.horizontal)
+            .padding(.top, 10)
+
             if cards.isEmpty {
                 Text("No flashcards available")
                     .font(.custom("LexendDeca-Regular", size: 20))
@@ -36,6 +50,11 @@ struct FlashcardView: View {
                     }
                 }
                 .animation(.spring(), value: currentIndex)
+                // Card index display
+                Text("< \(currentIndex + 1) of \(cards.count) >")
+                    .font(.custom("LexendDeca-Regular", size: 16))
+                    .foregroundColor(.gray)
+                    .padding(.top, 16)
             }
         }
         .padding()
