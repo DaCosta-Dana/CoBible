@@ -1,6 +1,6 @@
 #id,language,term/question,answer,group
-1,Java,How do you print text in Java?,System.out.println("Hello, World!"),Output
-2,Python,How do you print text in Python?,print("Hello, World!"),Output
+1,Java,How do you print text in Java?,System.out.println("Hello World!"),Output
+2,Python,How do you print text in Python?,print("Hello World!"),Output
 3,Java,What is the entry point of a Java program?,public static void main(String[] args),Program Structure
 4,Python,How do you define the main execution block in Python?,if __name__ == "__main__":,Program Structure
 5,Java,How do you declare an integer variable in Java?,int number = 10;,Variables
@@ -11,22 +11,22 @@
 10,Python,How do you write an if statement in Python?,if x > 5:,Conditionals
 11,Java,How do you concatenate strings in Java?,"\"Hello\" + \" World\"",Strings
 12,Python,How do you concatenate strings in Python?,"\"Hello\" + \" World\"",Strings
-13,Java,How do you define a method in Java?,public int add(int a, int b) { return a + b; },Functions
-14,Python,How do you define a function in Python?,def add(a, b): return a + b,Functions
+13,Java,How do you define a method in Java?,"public int add(int a, int b) { return a + b; }",Functions
+14,Python,How do you define a function in Python?,"def add(a, b): return a + b",Functions
 15,Java,How do you write a comment in Java?,// This is a comment,Syntax
 16,Python,How do you write a comment in Python?,# This is a comment,Syntax
 17,Java,How do you import the Scanner class in Java?,import java.util.Scanner;,Imports
 18,Python,How do you import a module in Python?,import math,Imports
 19,Java,How do you declare an array in Java?,int[] nums = new int[5];,Data Structures
-20,Python,How do you declare a list in Python?,nums = [1, 2, 3],Data Structures
-21,Java,How do you declare a dictionary in Java?,HashMap<String, Integer> map = new HashMap<>();,Data Structures
+20,Python,How do you declare a list in Python?,"nums = [1, 2, 3]",Data Structures
+21,Java,How do you declare a dictionary in Java?,"HashMap<String, Integer> map = new HashMap<>();",Data Structures
 22,Python,What keyword is used to define a function?,def,Functions
 23,Both,Which of these is a valid way to output text?,System.out.println(),Output
 24,Python,How do you write a comment in Python?,#,Syntax
 25,Java,What is the entry point method in Java?,main,Program Structure
 26,Python,What does 'if __name__ == "__main__":' do?,Runs code only if script is executed directly,Program Structure
 27,Java,What is the correct syntax to declare an integer variable?,int x = 5,Variables
-28,Python,How do you create a list with 3 elements?,[1, 2, 3],Data Structures
+28,Python,How do you create a list with 3 elements?,"[1, 2, 3]",Data Structures
 29,Both,What is the purpose of a loop?,Repeat code,Loops
 30,Both,What does a condition inside an if statement evaluate to?,Boolean,Conditionals
 31,Java,Which symbol is used to end a statement in Java?,;,Syntax
