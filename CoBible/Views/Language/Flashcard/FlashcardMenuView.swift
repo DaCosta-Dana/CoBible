@@ -1,13 +1,17 @@
 import SwiftUI
 
 struct FlashcardMenuView: View {
-    var selectedLanguage: String // Dynamically passed from LanguageDetailView
+    @State private var selectedLanguage: String // Now @State for dynamic switching
     @State private var flashcardGroups: [FlashcardGroup] = []
     @Environment(\.presentationMode) var presentationMode
 
+    init(selectedLanguage: String) {
+        _selectedLanguage = State(initialValue: selectedLanguage)
+    }
+
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
-            // Back button
+            // Top bar with Home and Language switch
             HStack {
                 Button(action: { presentationMode.wrappedValue.dismiss() }) {
                     HStack {
@@ -17,6 +21,14 @@ struct FlashcardMenuView: View {
                     }
                 }
                 Spacer()
+                Button(action: {
+                    selectedLanguage = (selectedLanguage == "Java" ? "Python" : "Java")
+                    loadFlashcardGroups()
+                }) {
+                    Text(selectedLanguage == "Java" ? "Python" : "Java")
+                        .font(.custom("LexendDeca-Black", size: 16))
+                        .foregroundColor(.blue)
+                }
             }
             .padding(.horizontal)
 
