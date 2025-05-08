@@ -3,10 +3,24 @@ import SwiftUI
 struct FlashcardMenuView: View {
     var selectedLanguage: String // Dynamically passed from LanguageDetailView
     @State private var flashcardGroups: [FlashcardGroup] = []
+    @Environment(\.presentationMode) var presentationMode
 
     var body: some View {
         NavigationView {
             VStack(alignment: .leading, spacing: 20) {
+                // Back button
+                HStack {
+                    Button(action: { presentationMode.wrappedValue.dismiss() }) {
+                        HStack {
+                            Image(systemName: "chevron.left")
+                            Text("Home")
+                                .font(.custom("LexendDeca-Black", size: 16))
+                        }
+                    }
+                    Spacer()
+                }
+                .padding(.horizontal)
+
                 // Header
                 Text("Flashcards")
                     .font(.custom("LexendDeca-Black", size: 30))
