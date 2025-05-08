@@ -6,48 +6,48 @@ struct FlashcardMenuView: View {
     @Environment(\.presentationMode) var presentationMode
 
     var body: some View {
-        NavigationView {
-            VStack(alignment: .leading, spacing: 20) {
-                // Back button
-                HStack {
-                    Button(action: { presentationMode.wrappedValue.dismiss() }) {
-                        HStack {
-                            Image(systemName: "chevron.left")
-                            Text("Home")
-                                .font(.custom("LexendDeca-Black", size: 16))
-                        }
+        VStack(alignment: .leading, spacing: 20) {
+            // Back button
+            HStack {
+                Button(action: { presentationMode.wrappedValue.dismiss() }) {
+                    HStack {
+                        Image(systemName: "chevron.left")
+                        Text("Home")
+                            .font(.custom("LexendDeca-Black", size: 16))
                     }
-                    Spacer()
                 }
+                Spacer()
+            }
+            .padding(.horizontal)
+
+            // Header
+            Text("Flashcards")
+                .font(.custom("LexendDeca-Black", size: 30))
+                .bold()
+                .padding(.top, 20)
                 .padding(.horizontal)
 
-                // Header
-                Text("Flashcards")
-                    .font(.custom("LexendDeca-Black", size: 30))
-                    .bold()
-                    .padding(.top, 20)
-                    .padding(.horizontal)
-
-                // Flashcard groups
-                ScrollView {
-                    VStack(spacing: 20) {
-                        ForEach(flashcardGroups, id: \.id) { group in
-                            NavigationLink(destination: FlashcardView(cards: group.cards)) {
-                                FlashcardGroupCardView(group: group)
-                            }
+            // Flashcard groups
+            ScrollView {
+                VStack(spacing: 20) {
+                    ForEach(flashcardGroups, id: \.id) { group in
+                        NavigationLink(destination: FlashcardView(cards: group.cards)) {
+                            FlashcardGroupCardView(group: group)
                         }
                     }
-                    .padding(.horizontal)
                 }
-            }
-            .background(
-                LinearGradient(gradient: Gradient(colors: [Color.white, Color(UIColor.systemGray6)]), startPoint: .top, endPoint: .bottom)
-                    .edgesIgnoringSafeArea(.all)
-            )
-            .onAppear {
-                loadFlashcardGroups()
+                .padding(.horizontal)
             }
         }
+        .background(
+            LinearGradient(gradient: Gradient(colors: [Color.white, Color(UIColor.systemGray6)]), startPoint: .top, endPoint: .bottom)
+                .edgesIgnoringSafeArea(.all)
+        )
+        .onAppear {
+            loadFlashcardGroups()
+        }
+        .navigationBarBackButtonHidden(true)
+        .navigationBarHidden(true)
     }
 
     // Helper function to parse a CSV row with quoted fields
