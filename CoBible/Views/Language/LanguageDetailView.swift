@@ -58,16 +58,6 @@ struct LanguageDetailView: View {
                     .edgesIgnoringSafeArea(.all)
             )
             .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    NavigationLink(destination: HomeChoice()) {
-                        HStack {
-                            Image(systemName: "house.fill")
-                            Text("Home")
-                                .font(.custom("LexendDeca-Black", size: 16))
-                        }
-                    }
-                }
-                
                 ToolbarItem(placement: .navigationBarTrailing) {
                     NavigationLink(
                         destination: LanguageDetailView(
