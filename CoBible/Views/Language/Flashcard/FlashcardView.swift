@@ -10,16 +10,6 @@ struct FlashcardView: View {
     var body: some View {
         VStack {
             // Only one back button, leading to the flashcard menu view
-            HStack {
-                Button(action: { presentationMode.wrappedValue.dismiss() }) {
-                    HStack {
-                        Image(systemName: "chevron.left")
-                        Text("Back")
-                            .font(.custom("LexendDeca-Black", size: 16))
-                    }
-                }
-                Spacer()
-            }
             .padding(.horizontal)
             .padding(.top, 10)
 
