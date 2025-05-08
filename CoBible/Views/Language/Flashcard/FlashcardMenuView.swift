@@ -59,7 +59,7 @@ struct FlashcardMenuView: View {
             let answer = String(columns[3].trimmingCharacters(in: .whitespaces))
 
             if groups[groupName] == nil {
-                groups[groupName] = FlashcardGroup(id: UUID(), title: groupName, cards: [])
+                groups[groupName] = FlashcardGroup(title: groupName, cards: [])
             }
 
             groups[groupName]?.cards.append(Flashcard(question: question, answer: answer))
