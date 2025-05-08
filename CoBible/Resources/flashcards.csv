@@ -21,20 +21,40 @@
 20,Python,How do you declare a list in Python?,"nums = [1, 2, 3]",Data Structures
 21,Java,How do you declare a dictionary in Java?,"HashMap<String, Integer> map = new HashMap<>();",Data Structures
 22,Python,What keyword is used to define a function?,def,Functions
-23,Both,Which of these is a valid way to output text?,System.out.println(),Output
+23,Java,Which of these is a valid way to output text?,System.out.println(),Output
 24,Python,How do you write a comment in Python?,#,Syntax
 25,Java,What is the entry point method in Java?,main,Program Structure
 26,Python,What does 'if __name__ == "__main__":' do?,Runs code only if script is executed directly,Program Structure
 27,Java,What is the correct syntax to declare an integer variable?,int x = 5,Variables
 28,Python,How do you create a list with 3 elements?,"[1, 2, 3]",Data Structures
-29,Both,What is the purpose of a loop?,Repeat code,Loops
-30,Both,What does a condition inside an if statement evaluate to?,Boolean,Conditionals
+29,Java,What is the purpose of a loop?,Repeat code,Loops
+30,Java,What does a condition inside an if statement evaluate to?,Boolean,Conditionals
 31,Java,Which symbol is used to end a statement in Java?,;,Syntax
 32,Python,Which keyword is used to define a loop over a sequence?,for,Loops
-33,Both,What does a variable store?,data,Variables
+33,Java,What does a variable store?,data,Variables
 34,Java,How do you import the Scanner class?,import java.util.Scanner;,Imports
 35,Python,What function returns the length of a list?,len(),Data Structures
 36,Python,How do you declare a dictionary in Python?,map = {'key': 'value'},Data Structures
 37,Java,How do you handle exceptions in Java?,try { } catch (Exception e) { },Error Handling
 38,Python,How do you handle exceptions in Python?,try:\n    pass\nexcept Exception as e:\n    pass,Error Handling
 39,Java,What keyword is used to define a class?,class,Syntax
+40,Python,Which of these is a valid way to output text?,System.out.println(),Output
+41,Python,What is the purpose of a loop?,Repeat code,Loops
+42,Python,What does a condition inside an if statement evaluate to?,Boolean,Conditionals
+43,Python,What does a variable store?,data,Variables
+44,Java,How do you create a list with 3 elements?,"[1, 2, 3]",Data Structures
+45,Java,What function returns the length of an array?,array.length,Data Structures
+46,Java,How do you declare a dictionary in Java?,"HashMap<String, Integer> map = new HashMap<>();",Data Structures
+47,Java,How do you handle exceptions in Java?,try { } catch (Exception e) { },Error Handling
+48,Python,How do you handle exceptions in Python?,try:\n    pass\nexcept Exception as e:\n    pass,Error Handling
+49,Java,What keyword is used to define a class?,class,Syntax
+50,Python,How do you define a class in Python?,class MyClass:,Syntax
+51,Java,How do you create a new object in Java?,MyClass obj = new MyClass();,Objects
+52,Python,How do you create a new object in Python?,obj = MyClass(),Objects
+53,Java,How do you access an object's method in Java?,obj.method(),Objects
+54,Python,How do you access an object's method in Python?,obj.method(),Objects
+55,Java,How do you create a constructor in Java?,public MyClass() { },Objects
+56,Python,How do you create a constructor in Python?,def __init__(self):,Objects
+57,Java,How do you create a subclass in Java?,class SubClass extends SuperClass { },Inheritance
+58,Python,How do you create a subclass in Python?,class SubClass(SuperClass):,Inheritance
+59,Java,How do you override a method in Java?,@Override public void method() { },Inheritance
