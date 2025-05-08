@@ -89,21 +89,8 @@ struct FlashcardGroupCardView: View {
     }
 }
 
-// Flashcard group model
-struct FlashcardGroup: Identifiable {
-    var id: UUID
-    var title: String
-    var cards: [Flashcard]
-}
-
-// Flashcard model
-struct Flashcard {
-    var question: String
-    var answer: String
-}
-
 struct FlashcardMenuView_Previews: PreviewProvider {
     static var previews: some View {
-        FlashcardMenuView(selectedLanguage: "English")
+        FlashcardMenuView(selectedLanguage: "Java") // Use a valid language for preview
     }
 }
