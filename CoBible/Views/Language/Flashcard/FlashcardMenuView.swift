@@ -43,9 +43,9 @@ struct FlashcardMenuView: View {
         var insideQuotes = false
         var iterator = row.makeIterator()
         while let char = iterator.next() {
-            if char == '"' {
+            if char == "\"" {
                 insideQuotes.toggle()
-            } else if char == ',' && !insideQuotes {
+            } else if char == "," && !insideQuotes {
                 result.append(value)
                 value = ""
             } else {
