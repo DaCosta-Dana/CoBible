@@ -9,6 +9,7 @@ struct FlashcardView: View {
 
     var body: some View {
         VStack {
+            // Only one back button, leading to the flashcard menu view
             HStack {
                 Button(action: { presentationMode.wrappedValue.dismiss() }) {
                     HStack {
@@ -62,6 +63,8 @@ struct FlashcardView: View {
             LinearGradient(gradient: Gradient(colors: [Color.white, Color(UIColor.systemGray6)]), startPoint: .top, endPoint: .bottom)
                 .edgesIgnoringSafeArea(.all)
         )
+        // Hide the navigation bar back button
+        .navigationBarBackButtonHidden(true)
     }
 
     private func goToNextCard() {
