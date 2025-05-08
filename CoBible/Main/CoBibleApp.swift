@@ -11,7 +11,6 @@ struct CoBibleApp: App {
         ])
         //Storing data on disk
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-
         do {
             //Try to create the container with our configuration
             return try ModelContainer(for: schema, configurations: [modelConfiguration])

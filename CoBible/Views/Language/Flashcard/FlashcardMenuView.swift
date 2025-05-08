@@ -36,6 +36,26 @@ struct FlashcardMenuView: View {
         }
     }
 
+    // Helper function to parse a CSV row with quoted fields
+    private func parseCSVRow(_ row: String) -> [String] {
+        var result: [String] = []
+        var value = ""
+        var insideQuotes = false
+        var iterator = row.makeIterator()
+        while let char = iterator.next() {
+            if char == '"' {
+                insideQuotes.toggle()
+            } else if char == ',' && !insideQuotes {
+                result.append(value)
+                value = ""
+            } else {
+                value.append(char)
+            }
+        }
+        result.append(value)
+        return result
+    }
+
     // Load flashcard groups from a CSV file in the Resources folder
     private func loadFlashcardGroups() {
         guard let csvPath = Bundle.main.path(forResource: "flashcards", ofType: "csv"),
@@ -48,15 +68,15 @@ struct FlashcardMenuView: View {
         let rows = csvContent.split(separator: "\n")
 
         for row in rows.dropFirst() { // Skip the header row
-            let columns = row.split(separator: ",")
+            let columns = parseCSVRow(String(row))
             guard columns.count >= 5 else { continue } // Ensure valid row format
 
-            let language = String(columns[1].trimmingCharacters(in: .whitespaces))
+            let language = columns[1].trimmingCharacters(in: .whitespaces)
             guard language == selectedLanguage else { continue } // Filter by selected language
 
-            let groupName = String(columns[4].trimmingCharacters(in: .whitespaces))
-            let question = String(columns[2].trimmingCharacters(in: .whitespaces))
-            let answer = String(columns[3].trimmingCharacters(in: .whitespaces))
+            let groupName = columns[4].trimmingCharacters(in: .whitespaces)
+            let question = columns[2].trimmingCharacters(in: .whitespaces)
+            let answer = columns[3].trimmingCharacters(in: .whitespaces)
 
             if groups[groupName] == nil {
                 groups[groupName] = FlashcardGroup(title: groupName, cards: [])
