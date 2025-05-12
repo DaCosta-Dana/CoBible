@@ -30,14 +30,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		4A3EBB922DC2588500A34048 /* Exceptions for "CoBibleUITests" folder in "CoBibleTests" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				CoBibleUITests.swift,
-				CoBibleUITestsLaunchTests.swift,
-			);
-			target = AE2A8D2B2D766A87009B8BA0 /* CoBibleTests */;
-		};
 		AE2A8D3E2D766A87009B8BA0 /* Exceptions for "CoBible" folder in "CoBible" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -63,9 +55,6 @@
 		};
 		AE2A8D392D766A87009B8BA0 /* CoBibleUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				4A3EBB922DC2588500A34048 /* Exceptions for "CoBibleUITests" folder in "CoBibleTests" target */,
-			);
 			path = CoBibleUITests;
 			sourceTree = "<group>";
 		};

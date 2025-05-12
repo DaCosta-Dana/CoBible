@@ -1,101 +1,101 @@
-Language,Question,Option A,Option B,Option C,Option D,Answer
-Java,What is the size of an int in Java?,2 bytes,4 bytes,8 bytes,16 bytes,B
-Java,Which keyword is used to inherit a class?,this,super,extends,implements,C
-Java,What is the default value of a boolean in Java?,true,false,null,0,B
-Java,Which method is used to start a thread in Java?,run(),start(),execute(),begin(),B
-Java,Which package is imported by default in every Java program?,java.util,java.io,java.lang,java.net,C
-Java,What is the parent class of all classes in Java?,Object,Class,Base,Super,A
-Java,Which of these is not a Java access modifier?,public,private,protected,internal,D
-Java,What is the extension of compiled Java files?,.java,.class,.exe,.jar,B
-Java,Which keyword is used to define a constant in Java?,const,final,static,immutable,B
-Java,What is the output of 10/3 in Java?,3,3.33,3.0,Error,A
-Java,Which of these is not a primitive data type in Java?,int,float,string,boolean,C
-Java,What is the default value of a char in Java?,null,'\u0000',' ',0,B
-Java,Which loop is guaranteed to execute at least once?,for,while,do-while,foreach,C
-Java,Which of these is not a feature of Java?,Platform-independent,Object-oriented,Pointer-based,Secure,C
-Java,What is the use of the 'this' keyword in Java?,Refers to the current object,Refers to the parent class,Refers to a static method,Refers to a local variable,A
-Java,Which of these is not a valid Java identifier?,_myVar,$myVar,123myVar,myVar123,C
-Java,What is the output of "Hello" + 5 in Java?,Hello5,Error,Hello 5,5Hello,A
-Java,Which of these is not a valid exception in Java?,IOException,SQLException,FileNotFoundException,MemoryError,D
-Java,What is the purpose of the 'super' keyword in Java?,Access parent class methods,Access child class methods,Access static methods,Access private methods,A
-Java,Which of these is not a valid Java operator?,+,*,&,++,D
-Java,What is the default value of an int array in Java?,null,0,-1,undefined,B
-Java,Which of these is not a valid Java loop?,for,while,foreach,repeat,D
-Java,What is the use of the 'final' keyword in Java?,Define constants,Prevent inheritance,Prevent method overriding,All of the above,D
-Java,Which of these is not a valid Java collection?,ArrayList,HashMap,HashSet,Dictionary,D
-Java,What is the output of Math.max(5, 10) in Java?,5,10,15,Error,B
-Java,Which of these is not a valid Java thread state?,NEW,RUNNABLE,WAITING,EXECUTING,D
-Java,What is the purpose of the 'static' keyword in Java?,Define instance variables,Define class-level variables,Define local variables,Define constants,B
-Java,Which of these is not a valid Java annotation?,@Override,@Deprecated,@Functional,@Serializable,D
-Java,What is the output of "Hello".length() in Java?,4,5,6,Error,B
-Java,Which of these is not a valid Java interface?,Runnable,Serializable,Cloneable,Thread,D
-Java,What is the purpose of the 'abstract' keyword in Java?,Define a concrete class,Define an abstract class,Define a static class,Define a final class,B
-Java,Which of these is not a valid Java stream?,FileInputStream,BufferedReader,DataStream,PrintStream,C
-Java,What is the output of 5 << 2 in Java?,10,20,40,Error,C
-Java,Which of these is not a valid Java exception handling block?,try,catch,finally,throw,D
-Java,What is the purpose of the 'synchronized' keyword in Java?,Thread safety,Memory management,Garbage collection,Exception handling,A
-Java,Which of these is not a valid Java file operation?,Read,Write,Execute,Delete,C
-Java,What is the output of "Hello".substring(1, 3) in Java?,He,el,llo,Error,B
-Java,Which of these is not a valid Java date/time class?,Date,Calendar,LocalDateTime,TimeZone,D
-Java,What is the purpose of the 'volatile' keyword in Java?,Thread safety,Memory consistency,Garbage collection,Exception handling,B
-Java,Which of these is not a valid Java access specifier?,public,private,protected,internal,D
-Java,What is the output of "Hello".toUpperCase() in Java?,hello,HELLO,Hello,Error,B
-Java,Which of these is not a valid Java collection framework class?,ArrayList,HashMap,HashSet,Vector,D
-Java,What is the purpose of the 'transient' keyword in Java?,Serialization,Deserialization,Thread safety,Memory management,A
-Java,Which of these is not a valid Java keyword?,goto,const,strictfp,volatile,B
-Java,What is the output of 10 % 3 in Java?,1,2,3,Error,A
-Java,Which of these is not a valid Java loop control statement?,break,continue,return,exit,D
-Java,What is the purpose of the 'native' keyword in Java?,Define native methods,Define static methods,Define final methods,Define abstract methods,A
-Java,Which of these is not a valid Java file extension?,.java,.class,.jar,.exe,D
-Java,What is the output of "Hello".charAt(1) in Java?,H,e,l,Error,B
-Java,Which of these is not a valid Java thread method?,start(),run(),stop(),execute(),D
-Python,What is the output of 10/3 in Python?,3,3.33,3.0,Error,B
-Python,Which keyword is used to define a function in Python?,function,def,lambda,func,B
-Python,What is the default value of a boolean in Python?,True,False,None,0,B
-Python,Which method is used to start a thread in Python?,run(),start(),execute(),begin(),B
-Python,Which module is used for regular expressions in Python?,regex,re,regexp,pattern,B
-Python,What is the parent class of all classes in Python?,Object,Class,Base,Super,A
-Python,Which of these is not a Python data type?,int,float,string,boolean,D
-Python,What is the extension of Python files?,.py,.class,.exe,.jar,A
-Python,Which keyword is used to define a constant in Python?,const,final,static,immutable,D
-Python,What is the output of 10//3 in Python?,3,3.33,3.0,Error,A
-Python,Which of these is not a Python keyword?,if,else,elif,elseif,D
-Python,What is the default value of a list in Python?,null,[],None,undefined,B
-Python,Which loop is guaranteed to execute at least once?,for,while,do-while,foreach,A
-Python,Which of these is not a feature of Python?,Platform-independent,Object-oriented,Pointer-based,Secure,C
-Python,What is the use of the 'self' keyword in Python?,Refers to the current object,Refers to the parent class,Refers to a static method,Refers to a local variable,A
-Python,Which of these is not a valid Python identifier?,_myVar,$myVar,123myVar,myVar123,C
-Python,What is the output of "Hello" + 5 in Python?,Hello5,Error,Hello 5,5Hello,B
-Python,Which of these is not a valid exception in Python?,IOError,ValueError,FileNotFoundError,MemoryError,D
-Python,What is the purpose of the 'super' keyword in Python?,Access parent class methods,Access child class methods,Access static methods,Access private methods,A
-Python,Which of these is not a valid Python operator?,+,*,&,++,D
-Python,What is the default value of an int array in Python?,null,0,-1,undefined,B
-Python,Which of these is not a valid Python loop?,for,while,foreach,repeat,D
-Python,What is the use of the 'global' keyword in Python?,Define constants,Access global variables,Prevent method overriding,All of the above,B
-Python,Which of these is not a valid Python collection?,list,dict,set,Dictionary,D
-Python,What is the output of max(5, 10) in Python?,5,10,15,Error,B
-Python,Which of these is not a valid Python thread state?,NEW,RUNNABLE,WAITING,EXECUTING,D
-Python,What is the purpose of the 'staticmethod' decorator in Python?,Define instance methods,Define class-level methods,Define local methods,Define constants,B
-Python,Which of these is not a valid Python annotation?,@staticmethod,@classmethod,@property,@Serializable,D
-Python,What is the output of len("Hello") in Python?,4,5,6,Error,B
-Python,Which of these is not a valid Python interface?,Runnable,Serializable,Cloneable,Thread,D
-Python,What is the purpose of the 'abstractmethod' decorator in Python?,Define a concrete method,Define an abstract method,Define a static method,Define a final method,B
-Python,Which of these is not a valid Python stream?,FileInputStream,BufferedReader,DataStream,PrintStream,C
-Python,What is the output of 5 << 2 in Python?,10,20,40,Error,C
-Python,Which of these is not a valid Python exception handling block?,try,catch,finally,throw,D
-Python,What is the purpose of the 'with' keyword in Python?,Thread safety,Memory management,Garbage collection,Exception handling,A
-Python,Which of these is not a valid Python file operation?,Read,Write,Execute,Delete,C
-Python,What is the output of "Hello"[1:3] in Python?,He,el,llo,Error,B
-Python,Which of these is not a valid Python date/time class?,Date,Calendar,datetime,timezone,D
-Python,What is the purpose of the 'global' keyword in Python?,Thread safety,Memory consistency,Garbage collection,Exception handling,B
-Python,Which of these is not a valid Python access specifier?,public,private,protected,internal,D
-Python,What is the output of "Hello".upper() in Python?,hello,HELLO,Hello,Error,B
-Python,Which of these is not a valid Python collection framework class?,list,dict,set,vector,D
-Python,What is the purpose of the 'nonlocal' keyword in Python?,Serialization,Deserialization,Thread safety,Memory management,A
-Python,Which of these is not a valid Python keyword?,goto,const,strictfp,volatile,B
-Python,What is the output of 10 % 3 in Python?,1,2,3,Error,A
-Python,Which of these is not a valid Python loop control statement?,break,continue,return,exit,D
-Python,What is the purpose of the 'lambda' keyword in Python?,Define native methods,Define static methods,Define final methods,Define anonymous functions,D
-Python,Which of these is not a valid Python file extension?,.py,.pyc,.pyo,.exe,D
-Python,What is the output of "Hello"[1] in Python?,H,e,l,Error,B
-Python,Which of these is not a valid Python thread method?,start(),run(),stop(),execute(),D
+Language,Category,Question,Option A,Option B,Option C,Option D,Answer
+Java,Syntax,What is the size of an int in Java?,2 bytes,4 bytes,8 bytes,16 bytes,B
+Java,Class,Which keyword is used to inherit a class?,this,super,extends,implements,C
+Java,Boolean,What is the default value of a boolean in Java?,true,false,null,0,B
+Java,Thread,Which method is used to start a thread in Java?,run(),start(),execute(),begin(),B
+Java,Package,Which package is imported by default in every Java program?,java.util,java.io,java.lang,java.net,C
+Java,Class,What is the parent class of all classes in Java?,Object,Class,Base,Super,A
+Java,Syntax,Which of these is not a Java access modifier?,public,private,protected,internal,D
+Java,Syntax,What is the extension of compiled Java files?,.java,.class,.exe,.jar,B
+Java,Syntax,Which keyword is used to define a constant in Java?,const,final,static,immutable,B
+Java,Syntax,What is the output of 10/3 in Java?,3,3.33,3.0,Error,A
+Java,Data Types,Which of these is not a primitive data type in Java?,int,float,string,boolean,C
+Java,Char,What is the default value of a char in Java?,null,'\u0000',' ',0,B
+Java,Loop,Which loop is guaranteed to execute at least once?,for,while,do-while,foreach,C
+Java,Features,Which of these is not a feature of Java?,Platform-independent,Object-oriented,Pointer-based,Secure,C
+Java,Keyword,What is the use of the 'this' keyword in Java?,Refers to the current object,Refers to the parent class,Refers to a static method,Refers to a local variable,A
+Java,Syntax,Which of these is not a valid Java identifier?,_myVar,$myVar,123myVar,myVar123,C
+Java,Syntax,What is the output of "Hello" + 5 in Java?,Hello5,Error,Hello 5,5Hello,A
+Java,Exception,Which of these is not a valid exception in Java?,IOException,SQLException,FileNotFoundException,MemoryError,D
+Java,Keyword,What is the purpose of the 'super' keyword in Java?,Access parent class methods,Access child class methods,Access static methods,Access private methods,A
+Java,Syntax,Which of these is not a valid Java operator?,+,*,&,++,D
+Java,Array,What is the default value of an int array in Java?,null,0,-1,undefined,B
+Java,Loop,Which of these is not a valid Java loop?,for,while,foreach,repeat,D
+Java,Keyword,What is the use of the 'final' keyword in Java?,Define constants,Prevent inheritance,Prevent method overriding,All of the above,D
+Java,Collection,Which of these is not a valid Java collection?,ArrayList,HashMap,HashSet,Dictionary,D
+Java,Math,What is the output of Math.max(5, 10) in Java?,5,10,15,Error,B
+Java,Thread,Which of these is not a valid Java thread state?,NEW,RUNNABLE,WAITING,EXECUTING,D
+Java,Keyword,What is the purpose of the 'static' keyword in Java?,Define instance variables,Define class-level variables,Define local variables,Define constants,B
+Java,Annotation,Which of these is not a valid Java annotation?,@Override,@Deprecated,@Functional,@Serializable,D
+Java,String,What is the output of "Hello".length() in Java?,4,5,6,Error,B
+Java,Interface,Which of these is not a valid Java interface?,Runnable,Serializable,Cloneable,Thread,D
+Java,Keyword,What is the purpose of the 'abstract' keyword in Java?,Define a concrete class,Define an abstract class,Define a static class,Define a final class,B
+Java,Stream,Which of these is not a valid Java stream?,FileInputStream,BufferedReader,DataStream,PrintStream,C
+Java,Bitwise,What is the output of 5 << 2 in Java?,10,20,40,Error,C
+Java,Exception,Which of these is not a valid Java exception handling block?,try,catch,finally,throw,D
+Java,Keyword,What is the purpose of the 'synchronized' keyword in Java?,Thread safety,Memory management,Garbage collection,Exception handling,A
+Java,File,Which of these is not a valid Java file operation?,Read,Write,Execute,Delete,C
+Java,String,What is the output of "Hello".substring(1, 3) in Java?,He,el,llo,Error,B
+Java,Date/Time,Which of these is not a valid Java date/time class?,Date,Calendar,LocalDateTime,TimeZone,D
+Java,Keyword,What is the purpose of the 'volatile' keyword in Java?,Thread safety,Memory consistency,Garbage collection,Exception handling,B
+Java,Access Specifier,Which of these is not a valid Java access specifier?,public,private,protected,internal,D
+Java,String,What is the output of "Hello".toUpperCase() in Java?,hello,HELLO,Hello,Error,B
+Java,Collection,Which of these is not a valid Java collection framework class?,ArrayList,HashMap,HashSet,Vector,D
+Java,Keyword,What is the purpose of the 'transient' keyword in Java?,Serialization,Deserialization,Thread safety,Memory management,A
+Java,Keyword,Which of these is not a valid Java keyword?,goto,const,strictfp,volatile,B
+Java,Math,What is the output of 10 % 3 in Java?,1,2,3,Error,A
+Java,Loop,Which of these is not a valid Java loop control statement?,break,continue,return,exit,D
+Java,Keyword,What is the purpose of the 'native' keyword in Java?,Define native methods,Define static methods,Define final methods,Define abstract methods,A
+Java,File,Which of these is not a valid Java file extension?,.java,.class,.jar,.exe,D
+Java,String,What is the output of "Hello".charAt(1) in Java?,H,e,l,Error,B
+Java,Thread,Which of these is not a valid Java thread method?,start(),run(),stop(),execute(),D
+Python,Math,What is the output of 10/3 in Python?,3,3.33,3.0,Error,B
+Python,Keyword,Which keyword is used to define a function in Python?,function,def,lambda,func,B
+Python,Boolean,What is the default value of a boolean in Python?,True,False,None,0,B
+Python,Thread,Which method is used to start a thread in Python?,run(),start(),execute(),begin(),B
+Python,Module,Which module is used for regular expressions in Python?,regex,re,regexp,pattern,B
+Python,Class,What is the parent class of all classes in Python?,Object,Class,Base,Super,A
+Python,Data Types,Which of these is not a Python data type?,int,float,string,boolean,D
+Python,File,What is the extension of Python files?,.py,.class,.exe,.jar,A
+Python,Keyword,Which keyword is used to define a constant in Python?,const,final,static,immutable,D
+Python,Math,What is the output of 10//3 in Python?,3,3.33,3.0,Error,A
+Python,Keyword,Which of these is not a Python keyword?,if,else,elif,elseif,D
+Python,List,What is the default value of a list in Python?,null,[],None,undefined,B
+Python,Loop,Which loop is guaranteed to execute at least once?,for,while,do-while,foreach,A
+Python,Features,Which of these is not a feature of Python?,Platform-independent,Object-oriented,Pointer-based,Secure,C
+Python,Keyword,What is the use of the 'self' keyword in Python?,Refers to the current object,Refers to the parent class,Refers to a static method,Refers to a local variable,A
+Python,Syntax,Which of these is not a valid Python identifier?,_myVar,$myVar,123myVar,myVar123,C
+Python,Syntax,What is the output of "Hello" + 5 in Python?,Hello5,Error,Hello 5,5Hello,B
+Python,Exception,Which of these is not a valid exception in Python?,IOError,ValueError,FileNotFoundError,MemoryError,D
+Python,Keyword,What is the purpose of the 'super' keyword in Python?,Access parent class methods,Access child class methods,Access static methods,Access private methods,A
+Python,Syntax,Which of these is not a valid Python operator?,+,*,&,++,D
+Python,Array,What is the default value of an int array in Python?,null,0,-1,undefined,B
+Python,Loop,Which of these is not a valid Python loop?,for,while,foreach,repeat,D
+Python,Keyword,What is the use of the 'global' keyword in Python?,Define constants,Access global variables,Prevent method overriding,All of the above,B
+Python,Collection,Which of these is not a valid Python collection?,list,dict,set,Dictionary,D
+Python,Math,What is the output of max(5, 10) in Python?,5,10,15,Error,B
+Python,Thread,Which of these is not a valid Python thread state?,NEW,RUNNABLE,WAITING,EXECUTING,D
+Python,Decorator,What is the purpose of the 'staticmethod' decorator in Python?,Define instance methods,Define class-level methods,Define local methods,Define constants,B
+Python,Annotation,Which of these is not a valid Python annotation?,@staticmethod,@classmethod,@property,@Serializable,D
+Python,String,What is the output of len("Hello") in Python?,4,5,6,Error,B
+Python,Interface,Which of these is not a valid Python interface?,Runnable,Serializable,Cloneable,Thread,D
+Python,Decorator,What is the purpose of the 'abstractmethod' decorator in Python?,Define a concrete method,Define an abstract method,Define a static method,Define a final method,B
+Python,Stream,Which of these is not a valid Python stream?,FileInputStream,BufferedReader,DataStream,PrintStream,C
+Python,Bitwise,What is the output of 5 << 2 in Python?,10,20,40,Error,C
+Python,Exception,Which of these is not a valid Python exception handling block?,try,catch,finally,throw,D
+Python,Keyword,What is the purpose of the 'with' keyword in Python?,Thread safety,Memory management,Garbage collection,Exception handling,A
+Python,File,Which of these is not a valid Python file operation?,Read,Write,Execute,Delete,C
+Python,String,What is the output of "Hello"[1:3] in Python?,He,el,llo,Error,B
+Python,Date/Time,Which of these is not a valid Python date/time class?,Date,Calendar,datetime,timezone,D
+Python,Keyword,What is the purpose of the 'global' keyword in Python?,Thread safety,Memory consistency,Garbage collection,Exception handling,B
+Python,Access Specifier,Which of these is not a valid Python access specifier?,public,private,protected,internal,D
+Python,String,What is the output of "Hello".upper() in Python?,hello,HELLO,Hello,Error,B
+Python,Collection,Which of these is not a valid Python collection framework class?,list,dict,set,vector,D
+Python,Keyword,What is the purpose of the 'nonlocal' keyword in Python?,Serialization,Deserialization,Thread safety,Memory management,A
+Python,Keyword,Which of these is not a valid Python keyword?,goto,const,strictfp,volatile,B
+Python,Math,What is the output of 10 % 3 in Python?,1,2,3,Error,A
+Python,Loop,Which of these is not a valid Python loop control statement?,break,continue,return,exit,D
+Python,Keyword,What is the purpose of the 'lambda' keyword in Python?,Define native methods,Define static methods,Define final methods,Define anonymous functions,D
+Python,File,Which of these is not a valid Python file extension?,.py,.pyc,.pyo,.exe,D
+Python,String,What is the output of "Hello"[1] in Python?,H,e,l,Error,B
+Python,Thread,Which of these is not a valid Python thread method?,start(),run(),stop(),execute(),D

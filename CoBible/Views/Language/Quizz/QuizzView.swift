@@ -10,35 +10,120 @@ struct QuizzView: View {
     @State private var showResults = false
     @State private var timeRemaining = 20
     @State private var timer: Timer?
-    
+    @State private var selectedCategories: Set<String> = [] // Changed to Set for multi-selection
+    @State private var availableCategories: [String] = []
+
     var body: some View {
         ZStack {
             Color.white.edgesIgnoringSafeArea(.all)
-            
-            if showResults {
-                quizResultsView
-            } else if questions.isEmpty {
-                ProgressView("Loading questions...")
-                    .padding(.top, 20) // Added spacing
-                    .onAppear {
-                        loadQuestions()
-                    }
-            } else {
-                quizContentView
-            }
-            
+
             VStack {
                 Text("\(language) Quiz")
                     .font(.custom("LexendDeca-Black", size: 40))
-                    .padding(.top, 20) // Consistent spacing
                 Spacer()
+            }
+
+            if showResults {
+                quizResultsView
+            } else if questions.isEmpty {
+                VStack(spacing: 24) {
+                    Text("Choose Categories")
+                        .font(.custom("LexendDeca-Black", size: 20))
+                        .padding(.top, 60)
+                    if !availableCategories.isEmpty {
+                        ScrollView {
+                            VStack(spacing: 20) {
+                                ForEach(availableCategories, id: \.self) { category in
+                                    Button(action: {
+                                        withAnimation {
+                                            if selectedCategories.contains(category) {
+                                                selectedCategories.remove(category)
+                                            } else {
+                                                selectedCategories.insert(category)
+                                            }
+                                        }
+                                    }) {
+                                        HStack {
+                                            Image(systemName: selectedCategories.contains(category) ? "checkmark.square.fill" : "square")
+                                                .foregroundColor(selectedCategories.contains(category) ? .green : .gray)
+                                                .font(.system(size: 24))
+                                            Text(category)
+                                                .font(.custom("LexendDeca-Black", size: 18))
+                                                .foregroundColor(.primary)
+                                            Spacer()
+                                        }
+                                        .padding()
+                                        .frame(maxWidth: .infinity, minHeight: 60, alignment: .leading)
+                                        .background(
+                                            RoundedRectangle(cornerRadius: 16)
+                                                .fill(selectedCategories.contains(category) ? Color.blue.opacity(0.15) : Color.white)
+                                        )
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 16)
+                                                .stroke(selectedCategories.contains(category) ? Color.blue : Color.gray.opacity(0.2), lineWidth: 2)
+                                        )
+                                        .shadow(color: Color.black.opacity(0.06), radius: 3, x: 0, y: 2)
+                                    }
+                                    .buttonStyle(PlainButtonStyle())
+                                    .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                                        if !selectedCategories.contains(category) {
+                                            Button {
+                                                withAnimation {
+                                                    selectedCategories.insert(category)
+                                                }
+                                            } label: {
+                                                Label("Select", systemImage: "arrow.right.circle")
+                                            }
+                                            .tint(.blue)
+                                        } else {
+                                            Button {
+                                                withAnimation {
+                                                    selectedCategories.remove(category)
+                                                }
+                                            } label: {
+                                                Label("Deselect", systemImage: "xmark.circle")
+                                            }
+                                            .tint(.red)
+                                        }
+                                    }
+                                }
+                            }
+                            .padding(.horizontal)
+                        }
+                        .padding(.bottom, 10)
+                    } else {
+                        ProgressView("Loading categories...")
+                            .padding(.top, 20)
+                    }
+                    if !selectedCategories.isEmpty {
+                        Button(action: loadQuestions) {
+                            Text("Start Quiz")
+                                .font(.custom("LexendDeca-Black", size: 18))
+                                .foregroundColor(.white)
+                                .frame(maxWidth: .infinity)
+                                .padding()
+                                .background(Color.blue)
+                                .cornerRadius(12)
+                                .shadow(radius: 3)
+                        }
+                        .padding(.horizontal, 16)
+                        .padding(.top, 10)
+                        .transition(.opacity)
+                    }
+                    Spacer()
+                }
+                .onAppear {
+                    loadCategories()
+                }
+            } else {
+                quizContentView
             }
         }
         .onDisappear {
             timer?.invalidate()
         }
     }
-    
+
     private var quizContentView: some View {
         VStack(spacing: 20) {
             progressView
@@ -233,11 +318,25 @@ struct QuizzView: View {
         .padding(.horizontal, 16) // Consistent horizontal padding
     }
     
+    private func loadCategories() {
+        let cats = Quizz.shared.getAvailableCategories(for: language)
+        availableCategories = cats
+        if let first = cats.first {
+            selectedCategories = [first]
+        }
+    }
+
     private func loadQuestions() {
-        questions = Quizz.shared.getRandomQuestionsForLanguage(language: language, count: 10)
+        let selected = Array(selectedCategories)
+        questions = Quizz.shared.getRandomQuestionsForLanguageAndCategories(language: language, categories: selected, count: 10)
+        currentQuestionIndex = 0
+        selectedAnswerIndex = nil
+        score = 0
+        hasAnswered = false
+        showResults = false
         startTimer()
     }
-    
+
     private func startTimer() {
         timeRemaining = 20
         timer?.invalidate()
@@ -280,7 +379,8 @@ struct QuizzView: View {
         score = 0
         hasAnswered = false
         showResults = false
-        loadQuestions()
+        questions = []
+        loadCategories()
     }
     
     private func getCurrentQuestion() -> Question {
