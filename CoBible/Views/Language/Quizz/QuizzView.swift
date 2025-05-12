@@ -10,7 +10,7 @@ struct QuizzView: View {
     @State private var showResults = false
     @State private var timeRemaining = 20
     @State private var timer: Timer?
-    @State private var selectedCategory: String? = nil // Single selection
+    @State private var selectedCategories: Set<String> = [] // Multi-selection
     @State private var availableCategories: [String] = []
 
     var body: some View {
@@ -23,24 +23,28 @@ struct QuizzView: View {
                 Spacer()
             }
 
-            Group {
-                if showResults {
-                    quizResultsView
-                } else if questions.isEmpty {
-                    categorySelectionView
-                } else {
-                    quizContentView
-                }
-            }
+            contentSwitcher
         }
         .onDisappear {
             timer?.invalidate()
         }
     }
 
+    // Split the main conditional into a computed property to help the compiler
+    @ViewBuilder
+    private var contentSwitcher: some View {
+        if showResults {
+            quizResultsView
+        } else if questions.isEmpty {
+            categorySelectionView
+        } else {
+            quizContentView
+        }
+    }
+
     private var categorySelectionView: some View {
         VStack(spacing: 24) {
-            Text("Choose a Category")
+            Text("Choose Categories")
                 .font(.custom("LexendDeca-Black", size: 20))
                 .padding(.top, 60)
             if !availableCategories.isEmpty {
@@ -48,45 +52,7 @@ struct QuizzView: View {
                     VStack(spacing: 20) {
                         Spacer().frame(height: 1)
                         ForEach(availableCategories, id: \.self) { category in
-                            Button(action: {
-                                withAnimation {
-                                    selectedCategory = category
-                                }
-                            }) {
-                                HStack {
-                                    Image(systemName: selectedCategory == category ? "checkmark.circle.fill" : "circle")
-                                        .foregroundColor(selectedCategory == category ? .green : .gray)
-                                        .font(.system(size: 24))
-                                    Text(category)
-                                        .font(.custom("LexendDeca-Black", size: 18))
-                                        .foregroundColor(.primary)
-                                    Spacer()
-                                }
-                                .padding()
-                                .frame(maxWidth: .infinity, minHeight: 60, alignment: .leading)
-                                .background(
-                                    RoundedRectangle(cornerRadius: 16)
-                                        .fill(selectedCategory == category ? Color.blue.opacity(0.15) : Color.white)
-                                )
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 16)
-                                        .stroke(selectedCategory == category ? Color.blue : Color.gray.opacity(0.2), lineWidth: 2)
-                                )
-                                .shadow(color: Color.black.opacity(0.06), radius: 3, x: 0, y: 2)
-                            }
-                            .buttonStyle(PlainButtonStyle())
-                            .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-                                if selectedCategory != category {
-                                    Button {
-                                        withAnimation {
-                                            selectedCategory = category
-                                        }
-                                    } label: {
-                                        Label("Select", systemImage: "arrow.right.circle")
-                                    }
-                                    .tint(.blue)
-                                }
-                            }
+                            categoryButton(for: category)
                         }
                     }
                     .padding(.horizontal)
@@ -96,7 +62,7 @@ struct QuizzView: View {
                 ProgressView("Loading categories...")
                     .padding(.top, 20)
             }
-            if selectedCategory != nil {
+            if !selectedCategories.isEmpty {
                 Button(action: loadQuestions) {
                     Text("Start Quiz")
                         .font(.custom("LexendDeca-Black", size: 18))
@@ -116,6 +82,41 @@ struct QuizzView: View {
         .onAppear {
             loadCategories()
         }
+    }
+
+    // Extracted category button to further help the compiler
+    private func categoryButton(for category: String) -> some View {
+        Button(action: {
+            if selectedCategories.contains(category) {
+                selectedCategories.remove(category)
+            } else {
+                selectedCategories.insert(category)
+            }
+        }) {
+            HStack {
+                Image(systemName: selectedCategories.contains(category) ? "checkmark.circle.fill" : "circle")
+                    .foregroundColor(selectedCategories.contains(category) ? .green : .gray)
+                    .font(.system(size: 24))
+                Text(category)
+                    .font(.custom("LexendDeca-Black", size: 18))
+                    .foregroundColor(.primary)
+                Spacer()
+            }
+            .padding()
+            .frame(maxWidth: .infinity, minHeight: 60, alignment: .leading)
+            .background(
+                RoundedRectangle(cornerRadius: 16)
+                    .fill(selectedCategories.contains(category) ? Color.blue.opacity(0.15) : Color.white)
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 16)
+                    .stroke(selectedCategories.contains(category) ? Color.blue : Color.gray.opacity(0.2), lineWidth: 2)
+            )
+            .shadow(color: Color.black.opacity(0.06), radius: 3, x: 0, y: 2)
+        }
+        .buttonStyle(.plain)
+        .clipShape(RoundedRectangle(cornerRadius: 16))
+        .padding(.horizontal, 0)
     }
 
     private var quizContentView: some View {
@@ -315,14 +316,14 @@ struct QuizzView: View {
     private func loadCategories() {
         let cats = Quizz.shared.getAvailableCategories(for: language)
         availableCategories = cats
-        if let first = cats.first {
-            selectedCategory = first
+        if let first = cats.first, selectedCategories.isEmpty {
+            selectedCategories = [first]
         }
     }
 
     private func loadQuestions() {
-        guard let category = selectedCategory else { return }
-        questions = Quizz.shared.getRandomQuestionsForLanguageAndCategory(language: language, category: category, count: 10)
+        let selected = Array(selectedCategories)
+        questions = Quizz.shared.getRandomQuestionsForLanguageAndCategories(language: language, categories: selected, count: 10)
         currentQuestionIndex = 0
         selectedAnswerIndex = nil
         score = 0
@@ -386,7 +387,7 @@ struct QuizzView: View {
     }
     
     private func optionCircleColor(for index: Int) -> Color {
-        if !hasAnswered {
+        if (!hasAnswered) {
             return selectedAnswerIndex == index ? .blue : .gray
         }
         
@@ -400,7 +401,7 @@ struct QuizzView: View {
     }
     
     private func optionBackgroundColor(for index: Int) -> Color {
-        if !hasAnswered {
+        if (!hasAnswered) {
             return selectedAnswerIndex == index ? Color.blue.opacity(0.1) : Color.white
         }
         
