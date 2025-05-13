@@ -32,6 +32,8 @@ final class CoBibleTests: XCTestCase {
     }
     
 //Test passed successfully
+    // Note: Had to remove a breakpoint manually in Xcode (Breakpoint Navigator)
+    // to allow the test to run without pausing unexpectedly.
     func testPopulateShortcutsAddsData() async throws {
         // Ensure the context is empty
         let initialShortcuts = try context.fetch(FetchDescriptor<Shortcut>())
