@@ -1,7 +1,8 @@
 import SwiftUI
 
 struct QuizzView: View {
-    let language: String
+    @Environment(\.presentationMode) var presentationMode
+    @State private var selectedLanguage: String
     @State private var questions: [Question] = []
     @State private var currentQuestionIndex = 0
     @State private var selectedAnswerIndex: Int? = nil
@@ -13,21 +14,56 @@ struct QuizzView: View {
     @State private var selectedCategories: Set<String> = [] // Multi-selection
     @State private var availableCategories: [String] = []
 
+    init(language: String) {
+        _selectedLanguage = State(initialValue: language)
+    }
+
     var body: some View {
         ZStack {
             Color.white.edgesIgnoringSafeArea(.all)
 
-            VStack {
-                Text("\(language) Quiz")
+            VStack(spacing: 0) {
+                // Top bar with Home and Language switch only on category selection screen
+                if questions.isEmpty && !showResults {
+                    HStack {
+                        Button(action: { presentationMode.wrappedValue.dismiss() }) {
+                            HStack {
+                                Image(systemName: "chevron.left")
+                                Text("Home")
+                                    .font(.custom("LexendDeca-Black", size: 16))
+                            }
+                        }
+                        Spacer()
+                        Button(action: {
+                            selectedLanguage = (selectedLanguage == "Java" ? "Python" : "Java")
+                            resetQuiz()
+                        }) {
+                            Text(selectedLanguage == "Java" ? "Python" : "Java")
+                                .font(.custom("LexendDeca-Black", size: 16))
+                                .foregroundColor(.white)
+                                .padding(.horizontal, 16)
+                                .padding(.vertical, 8)
+                                .background(Color.blue)
+                                .cornerRadius(12)
+                                .shadow(radius: 3)
+                        }
+                    }
+                    .padding(.horizontal)
+                    
+                }
+
+                Text("\(selectedLanguage) Quiz")
                     .font(.custom("LexendDeca-Black", size: 40))
                 Spacer()
-            }
 
-            contentSwitcher
+                contentSwitcher
+            }
         }
         .onDisappear {
             timer?.invalidate()
         }
+        .navigationBarBackButtonHidden(true) // <-- Add this line
+        .navigationBarHidden(true)           // <-- Add this line
     }
 
     // Split the main conditional into a computed property to help the compiler
@@ -43,10 +79,10 @@ struct QuizzView: View {
     }
 
     private var categorySelectionView: some View {
-        VStack(spacing: 24) {
+        VStack(spacing: 10) {
             Text("Choose Categories")
                 .font(.custom("LexendDeca-Black", size: 20))
-                .padding(.top, 60)
+                
             if !availableCategories.isEmpty {
                 ScrollView {
                     VStack(spacing: 20) {
@@ -142,7 +178,7 @@ struct QuizzView: View {
                     .padding(.horizontal, 16) // Consistent horizontal padding
             }
         }
-        .padding(.top, 20) // Consistent top padding
+        //.padding(.top, 20) // Consistent top padding
     }
     
     private var progressView: some View {
@@ -177,7 +213,7 @@ struct QuizzView: View {
             }
             .padding(.top, 5)
         }
-        .padding(.top, 100)
+        .padding(.top, 50)
     }
     
     private var questionView: some View {
@@ -314,7 +350,7 @@ struct QuizzView: View {
     }
     
     private func loadCategories() {
-        let cats = Quizz.shared.getAvailableCategories(for: language)
+        let cats = Quizz.shared.getAvailableCategories(for: selectedLanguage)
         availableCategories = cats
         if let first = cats.first, selectedCategories.isEmpty {
             selectedCategories = [first]
@@ -323,7 +359,7 @@ struct QuizzView: View {
 
     private func loadQuestions() {
         let selected = Array(selectedCategories)
-        questions = Quizz.shared.getRandomQuestionsForLanguageAndCategories(language: language, categories: selected, count: 10)
+        questions = Quizz.shared.getRandomQuestionsForLanguageAndCategories(language: selectedLanguage, categories: selected, count: 10)
         currentQuestionIndex = 0
         selectedAnswerIndex = nil
         score = 0

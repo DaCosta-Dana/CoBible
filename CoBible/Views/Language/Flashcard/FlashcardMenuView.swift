@@ -1,8 +1,11 @@
 import SwiftUI
 
 struct FlashcardMenuView: View {
-    @State private var selectedLanguage: String // Now @State for dynamic switching
+    @State private var selectedLanguage: String
     @State private var flashcardGroups: [FlashcardGroup] = []
+    @State private var selectedCategories: Set<String> = []
+    @State private var showFlashcards = false
+    @State private var cardsToShow: [Flashcard] = []
     @Environment(\.presentationMode) var presentationMode
 
     init(selectedLanguage: String) {
@@ -10,51 +13,94 @@ struct FlashcardMenuView: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 20) {
-            // Top bar with Home and Language switch
-            HStack {
-                Button(action: { presentationMode.wrappedValue.dismiss() }) {
-                    HStack {
-                        Image(systemName: "chevron.left")
-                        Text("Home")
-                            .font(.custom("LexendDeca-Black", size: 16))
-                    }
-                }
-                Spacer()
-                Button(action: {
-                    selectedLanguage = (selectedLanguage == "Java" ? "Python" : "Java")
-                    loadFlashcardGroups()
-                }) {
-                    Text(selectedLanguage == "Java" ? "Python" : "Java")
-                        .font(.custom("LexendDeca-Black", size: 16))
-                        .foregroundColor(.blue)
-                }
-            }
-            .padding(.horizontal)
+        ZStack {
+            Color.white.edgesIgnoringSafeArea(.all)
 
-            // Header
-            Text("Flashcards")
-                .font(.custom("LexendDeca-Black", size: 30))
-                .bold()
-                .padding(.top, 20)
-                .padding(.horizontal)
-
-            // Flashcard groups
-            ScrollView {
-                VStack(spacing: 20) {
-                    ForEach(flashcardGroups, id: \.id) { group in
-                        NavigationLink(destination: FlashcardView(cards: group.cards)) {
-                            FlashcardGroupCardView(group: group)
+            VStack(spacing: 0) {
+                // Top bar with Home and Language switch
+                HStack {
+                    Button(action: { presentationMode.wrappedValue.dismiss() }) {
+                        HStack {
+                            Image(systemName: "chevron.left")
+                            Text("Home")
+                                .font(.custom("LexendDeca-Black", size: 16))
                         }
                     }
+                    Spacer()
+                    Button(action: {
+                        selectedLanguage = (selectedLanguage == "Java" ? "Python" : "Java")
+                        loadFlashcardGroups()
+                        selectedCategories = []
+                    }) {
+                        Text(selectedLanguage == "Java" ? "Python" : "Java")
+                            .font(.custom("LexendDeca-Black", size: 16))
+                            .foregroundColor(.white)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 8)
+                            .background(Color.blue)
+                            .cornerRadius(12)
+                            .shadow(radius: 3)
+                    }
                 }
                 .padding(.horizontal)
+               
+
+                // Title
+                Text("\(selectedLanguage) Flashcards")
+                    .font(.custom("LexendDeca-Black", size: 40))
+                    .padding(.top, 16)
+                    .padding(.bottom, 8)
+
+                // Category selection
+                VStack(spacing: 10) {
+                    Text("Choose Categories")
+                        .font(.custom("LexendDeca-Black", size: 20))
+                        
+                    if !flashcardGroups.isEmpty {
+                        ScrollView {
+                            VStack(spacing: 20) {
+                                Spacer().frame(height: 1)
+                                ForEach(flashcardGroups, id: \.id) { group in
+                                    categoryButton(for: group)
+                                }
+                            }
+                            .padding(.horizontal, 16)
+                            .padding(.top, 10)
+                        }
+                        .padding(.bottom, 10)
+                    } else {
+                        ProgressView("Loading categories...")
+                            .padding(.top, 20)
+                    }
+                    Button(action: {
+                        // Gather all cards from selected categories
+                        let selectedGroups = flashcardGroups.filter { selectedCategories.contains($0.title) }
+                        cardsToShow = selectedGroups.flatMap { $0.cards }
+                        showFlashcards = true
+                    }) {
+                        Text("Start Flashcards")
+                            .font(.custom("LexendDeca-Black", size: 18))
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(selectedCategories.isEmpty ? Color.gray : Color.blue)
+                            .cornerRadius(12)
+                            .shadow(radius: 3)
+                    }
+                    .padding(.horizontal, 16)
+                    .padding(.top, 10)
+                    .disabled(selectedCategories.isEmpty)
+                    Spacer()
+                }
+                .padding(.top, 10)
             }
+
+            // Navigation to FlashcardView
+            NavigationLink(
+                destination: FlashcardView(cards: cardsToShow),
+                isActive: $showFlashcards
+            ) { EmptyView() }
         }
-        .background(
-            LinearGradient(gradient: Gradient(colors: [Color.white, Color(UIColor.systemGray6)]), startPoint: .top, endPoint: .bottom)
-                .edgesIgnoringSafeArea(.all)
-        )
         .onAppear {
             loadFlashcardGroups()
         }
@@ -62,7 +108,46 @@ struct FlashcardMenuView: View {
         .navigationBarHidden(true)
     }
 
-    // Helper function to parse a CSV row with quoted fields
+    private func categoryButton(for group: FlashcardGroup) -> some View {
+        Button(action: {
+            if selectedCategories.contains(group.title) {
+                selectedCategories.remove(group.title)
+            } else {
+                selectedCategories.insert(group.title)
+            }
+        }) {
+            HStack {
+                Image(systemName: selectedCategories.contains(group.title) ? "checkmark.circle.fill" : "circle")
+                    .foregroundColor(selectedCategories.contains(group.title) ? .green : .gray)
+                    .font(.system(size: 24))
+                VStack(alignment: .leading, spacing: 6) {
+                    Text(group.title)
+                        .font(.custom("LexendDeca-Black", size: 18))
+                        .bold()
+                    Text("\(group.cards.count) cards")
+                        .font(.custom("LexendDeca-Regular", size: 15))
+                        .foregroundColor(.gray)
+                }
+                Spacer()
+            }
+            .padding()
+            .frame(maxWidth: .infinity, minHeight: 60, alignment: .leading)
+            .background(
+                RoundedRectangle(cornerRadius: 16)
+                    .fill(selectedCategories.contains(group.title) ? Color.blue.opacity(0.15) : Color(UIColor.white))
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 16)
+                    .stroke(selectedCategories.contains(group.title) ? Color.blue : Color.gray.opacity(0.2), lineWidth: 2)
+            )
+            .shadow(color: Color.black.opacity(0.06), radius: 3, x: 0, y: 2)
+            .padding(.vertical, 2)
+        }
+        .buttonStyle(.plain)
+        .clipShape(RoundedRectangle(cornerRadius: 16))
+        .padding(.horizontal, 0)
+    }
+
     private func parseCSVRow(_ row: String) -> [String] {
         var result: [String] = []
         var value = ""
@@ -82,7 +167,6 @@ struct FlashcardMenuView: View {
         return result
     }
 
-    // Load flashcard groups from a CSV file in the Resources folder
     private func loadFlashcardGroups() {
         guard let csvPath = Bundle.main.path(forResource: "flashcards", ofType: "csv"),
               let csvContent = try? String(contentsOfFile: csvPath, encoding: .utf8) else {
@@ -112,31 +196,19 @@ struct FlashcardMenuView: View {
         }
 
         flashcardGroups = Array(groups.values)
-    }
-}
-
-struct FlashcardGroupCardView: View {
-    var group: FlashcardGroup
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Text(group.title)
-                .font(.custom("LexendDeca-Black", size: 20))
-                .bold()
-            Text("\(group.cards.count) cards")
-                .font(.custom("LexendDeca-Regular", size: 16))
-                .foregroundColor(.gray)
+        // Auto-select first category if none selected
+        if let first = flashcardGroups.first, selectedCategories.isEmpty {
+            selectedCategories = [first.title]
         }
-        .padding()
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background(Color.white)
-        .clipShape(RoundedRectangle(cornerRadius: 15))
-        .shadow(radius: 5)
     }
 }
+
+// FlashcardGroupCardView is no longer used, but you can keep it if needed elsewhere.
 
 struct FlashcardMenuView_Previews: PreviewProvider {
     static var previews: some View {
-        FlashcardMenuView(selectedLanguage: "Java") // Use a valid language for preview
+        NavigationView {
+            FlashcardMenuView(selectedLanguage: "Java")
+        }
     }
 }
