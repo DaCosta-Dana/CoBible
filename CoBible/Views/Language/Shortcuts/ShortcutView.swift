@@ -28,7 +28,7 @@ struct ShortcutView: View {
                 Button(action: { presentationMode.wrappedValue.dismiss() }) {
                     HStack {
                         Image(systemName: "chevron.left")
-                        Text("Home")
+                        Text("Back")
                             .font(.custom("LexendDeca-Black", size: 16))
                     }
                 }
@@ -38,12 +38,10 @@ struct ShortcutView: View {
                 }) {
                     Text(currentLanguage == "Java" ? "Python" : "Java")
                         .font(.custom("LexendDeca-Black", size: 16))
-                        .foregroundColor(.white)
+                        .foregroundColor(.blue)
                         .padding(.horizontal, 16)
                         .padding(.vertical, 8)
-                        .background(Color.blue)
-                        .cornerRadius(12)
-                        .shadow(radius: 3)
+                        
                 }
             }
             .padding(.horizontal)
