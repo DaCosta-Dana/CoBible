@@ -10,22 +10,29 @@ import XCTest
 import SwiftData
 @testable import CoBible
 
+// Unit tests for the CoBible app, focused on verifying shortcut population logic
 //Test passed successfully
 @MainActor
 final class CoBibleTests: XCTestCase {
-
+    //model container for testing without affecting storage
     var modelContainer: ModelContainer!
+    // The main context used to perform operations in this test
     var context: ModelContext!
-
+    
+    //Set up test environment with an in-memory SwitchData Model
     override func setUpWithError() throws {
         let schema = Schema([
             Shortcut.self
         ])
+        //Create a configuration that keep data in memory only for isolated testing
         let config = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
+        //Initialize the model container
         modelContainer = try ModelContainer(for: schema, configurations: [config])
+        //Retrieve main context from model container
         context = modelContainer.mainContext
     }
 
+    //Clean up ressources after each test 
     override func tearDownWithError() throws {
         modelContainer = nil
         context = nil
