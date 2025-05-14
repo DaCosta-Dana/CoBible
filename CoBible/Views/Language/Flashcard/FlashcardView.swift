@@ -6,6 +6,8 @@ struct FlashcardView: View {
     @State private var isFlipped: Bool = false
     @GestureState private var dragOffset: CGFloat = 0
     @Environment(\.presentationMode) var presentationMode
+    @State private var isCardVisible: Bool = true
+    @State private var cardOffset: CGFloat = 0
 
     var body: some View {
         VStack {
@@ -28,29 +30,50 @@ struct FlashcardView: View {
                     .foregroundColor(.gray)
             } else {
                 ZStack {
-                    ForEach(cards.indices, id: \.self) { index in
-                        if index == currentIndex {
-                            FlashcardContentView(card: cards[index], isFlipped: $isFlipped)
-                                .transition(.asymmetric(insertion: .opacity, removal: .move(edge: .trailing)))
-                                .offset(x: dragOffset)
-                                .gesture(
-                                    DragGesture()
-                                        .updating($dragOffset, body: { value, state, _ in
-                                            state = value.translation.width
-                                        })
-                                        .onEnded { value in
-                                            if value.translation.width < -100 {
-                                                goToNextCard()
-                                            } else if value.translation.width > 100 {
-                                                goToPreviousCard()
+                    if isCardVisible {
+                        FlashcardContentView(card: cards[currentIndex], isFlipped: $isFlipped)
+                            .id(currentIndex)
+                            .offset(x: cardOffset + dragOffset)
+                            .animation(.spring(response: 0.35, dampingFraction: 0.8), value: cardOffset)
+                            .gesture(
+                                DragGesture()
+                                    .updating($dragOffset, body: { value, state, _ in
+                                        state = value.translation.width
+                                    })
+                                    .onEnded { value in
+                                        if value.translation.width < -100 && currentIndex < cards.count - 1 {
+                                            // Swipe left, animate out to left
+                                            withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
+                                                cardOffset = -UIScreen.main.bounds.width
+                                            }
+                                            isFlipped = false
+                                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.32) {
+                                                cardOffset = 0
+                                                currentIndex += 1
+                                                isCardVisible = false
+                                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+                                                    isCardVisible = true
+                                                }
+                                            }
+                                        } else if value.translation.width > 100 && currentIndex > 0 {
+                                            // Swipe right, animate out to right
+                                            withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
+                                                cardOffset = UIScreen.main.bounds.width
+                                            }
+                                            isFlipped = false
+                                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.32) {
+                                                cardOffset = 0
+                                                currentIndex -= 1
+                                                isCardVisible = false
+                                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+                                                    isCardVisible = true
+                                                }
                                             }
                                         }
-                                )
-                        }
+                                    }
+                            )
                     }
                 }
-                .animation(.spring(), value: currentIndex)
-                // Card index display
                 Text("< \(currentIndex + 1) of \(cards.count) >")
                     .font(.custom("LexendDeca-Regular", size: 16))
                     .foregroundColor(.gray)
@@ -68,19 +91,35 @@ struct FlashcardView: View {
 
     private func goToNextCard() {
         if currentIndex < cards.count - 1 {
-            withAnimation(.spring(response: 0.5, dampingFraction: 0.7)) {
-                isFlipped = false
+            isFlipped = false
+            withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
+                cardOffset = -UIScreen.main.bounds.width
             }
-            currentIndex += 1
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.32) {
+                cardOffset = 0
+                currentIndex += 1
+                isCardVisible = false
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+                    isCardVisible = true
+                }
+            }
         }
     }
 
     private func goToPreviousCard() {
         if currentIndex > 0 {
-            withAnimation(.spring(response: 0.5, dampingFraction: 0.7)) {
-                isFlipped = false
+            isFlipped = false
+            withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
+                cardOffset = UIScreen.main.bounds.width
             }
-            currentIndex -= 1
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.32) {
+                cardOffset = 0
+                currentIndex -= 1
+                isCardVisible = false
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+                    isCardVisible = true
+                }
+            }
         }
     }
 }
