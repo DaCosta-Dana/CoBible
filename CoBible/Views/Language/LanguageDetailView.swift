@@ -1,33 +1,32 @@
 import SwiftUI
 
+// Main view for displaying details and options for a selected programming language
 struct LanguageDetailView: View {
-    var languageName: String
-    var imageName: String
+    var languageName: String   // Name of the language (Java or Python)
+    var imageName: String      // Image asset name for the language
 
     var body: some View {
         NavigationView {
             VStack(spacing: 20) {
-                // Titre de la page
+                // Page title
                 Text(languageName)
                     .font(.custom("LexendDeca-Black", size: 40))
                     .bold()
                     .padding(.top, 20)
-                    
                 
-                // Image du langage
+                // Language logo/image
                 Image(imageName)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 150, height: 150)
                     .padding()
 
-                // Options (Shortcuts, Quizzes, Flashcards)
+                // Options for Shortcuts, Quizzes, and Flashcards
                 VStack(spacing: 20) {
-                    // Navigation vers ShortcutView
+                    // Navigation to ShortcutView
                     NavigationLink(
                         destination: ShortcutView(
                             languageName: languageName
-                            //shortcuts: getShortcuts(for: languageName)
                         )
                     ) {
                         OptionCardView(optionName: "Shortcuts", iconName: "bolt.fill", color: .blue)
@@ -55,10 +54,12 @@ struct LanguageDetailView: View {
                 Spacer()
             }
             .background(
+                // Gradient background for the page
                 LinearGradient(gradient: Gradient(colors: [Color.white, Color(UIColor.systemGray6)]), startPoint: .top, endPoint: .bottom)
                     .edgesIgnoringSafeArea(.all)
             )
             .toolbar {
+                // Toolbar with a language switch button (top right)
                 ToolbarItem(placement: .navigationBarTrailing) {
                     NavigationLink(
                         destination: LanguageDetailView(
@@ -74,23 +75,20 @@ struct LanguageDetailView: View {
                             .background(Color.white)
                             .cornerRadius(12)
                             .shadow(radius: 3)
-                            
                     }
-                    
                 }
-                
             }
         }
         .navigationBarBackButtonHidden(true)
-        .navigationBarTitleDisplayMode(.inline) // Optionnel : titre compact ou aucun titre
+        .navigationBarTitleDisplayMode(.inline) // Compact or no title in navigation bar
     }
 }
 
-
+// Card view for displaying an option (Shortcuts, Quizzes, Flashcards)
 struct OptionCardView: View {
-    var optionName: String
-    var iconName: String
-    var color: Color
+    var optionName: String // Name of the option
+    var iconName: String   // SF Symbol icon name
+    var color: Color       // Icon color
 
     var body: some View {
         HStack {
@@ -111,7 +109,7 @@ struct OptionCardView: View {
     }
 }
 
-// ✅ Preview
+// Preview for SwiftUI canvas
 struct LanguageDetailView_Previews: PreviewProvider {
     static var previews: some View {
         LanguageDetailView(languageName: "Java", imageName: "java-logo")

@@ -1,22 +1,25 @@
 import SwiftUI
-//hallloooo
+
+// Main view for choosing the programming language (Java or Python)
 struct HomeChoice: View {
     var body: some View {
         NavigationView {
             VStack(spacing: 20) {
-                // Header
+                // Header/title
                 Text("Choose the language")
                     .font(.custom("LexendDeca-Black", size: 32))
                     .bold()
                     .padding(.top, 40)
                     .padding(.bottom, 20)
 
-                // Language cards
+                // Language selection cards
                 VStack(spacing: 20) {
+                    // Java card with navigation
                     NavigationLink(destination: LanguageDetailView(languageName: "Java", imageName: "java-logo")) {
                         LanguageCardView(imageName: "java-logo", languageName: "Java")
                             .foregroundColor(.black)
                     }
+                    // Python card with navigation
                     NavigationLink(destination: LanguageDetailView(languageName: "Python", imageName: "python-logo")) {
                         LanguageCardView(imageName: "python-logo", languageName: "Python")
                             .foregroundColor(.black)
@@ -28,6 +31,7 @@ struct HomeChoice: View {
             }
             .padding(.horizontal)
             .background(
+                // Gradient background for the page
                 LinearGradient(gradient: Gradient(colors: [Color.white, Color(UIColor.systemGray6)]), startPoint: .top, endPoint: .bottom)
                     .edgesIgnoringSafeArea(.all)
             )
@@ -37,9 +41,10 @@ struct HomeChoice: View {
     }
 }
 
+// Card view for displaying a language option (Java or Python)
 struct LanguageCardView: View {
-    var imageName: String
-    var languageName: String
+    var imageName: String      // Image asset name for the language
+    var languageName: String   // Name of the language
     
     var body: some View {
         VStack {
@@ -57,6 +62,7 @@ struct LanguageCardView: View {
     }
 }
 
+// Preview for SwiftUI canvas
 struct HomeChoice_Previews: PreviewProvider {
     static var previews: some View {
         HomeChoice()

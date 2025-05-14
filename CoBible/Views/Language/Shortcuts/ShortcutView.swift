@@ -1,18 +1,21 @@
 import SwiftUI
 import SwiftData
 
+// Main view for displaying programming shortcuts for a selected language
 struct ShortcutView: View {
-    var languageName: String
-    @Query var shortcuts: [Shortcut]
-    @Environment(\.presentationMode) var presentationMode
-    @State private var searchText: String = ""
-    @State private var currentLanguage: String
+    var languageName: String // The initial language (Java or Python)
+    @Query var shortcuts: [Shortcut] // All shortcuts from the database
+    @Environment(\.presentationMode) var presentationMode // For dismissing the view
+    @State private var searchText: String = "" // Search bar text
+    @State private var currentLanguage: String // The language currently displayed
 
+    // Custom initializer to set the initial language
     init(languageName: String) {
         self.languageName = languageName
         _currentLanguage = State(initialValue: languageName)
     }
 
+    // Filter shortcuts based on search text
     var filteredShortcuts: [Shortcut] {
         if searchText.isEmpty {
             return shortcuts
@@ -23,7 +26,7 @@ struct ShortcutView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
-            // Top bar with Home and Language switch (styled like QuizzView)
+            // Top bar with back button and language switch
             HStack {
                 Button(action: { presentationMode.wrappedValue.dismiss() }) {
                     HStack {
@@ -34,6 +37,7 @@ struct ShortcutView: View {
                 }
                 Spacer()
                 Button(action: {
+                    // Switch between Java and Python
                     currentLanguage = (currentLanguage == "Java" ? "Python" : "Java")
                 }) {
                     Text(currentLanguage == "Java" ? "Python" : "Java")
@@ -41,19 +45,17 @@ struct ShortcutView: View {
                         .foregroundColor(.blue)
                         .padding(.horizontal, 16)
                         .padding(.vertical, 8)
-                        
                 }
             }
             .padding(.horizontal)
             
-
+            // Title for the shortcuts section
             Text("\(currentLanguage) Shortcuts")
                 .font(.custom("LexendDeca-Black", size: 40))
                 .bold()
-                .frame(maxWidth: .infinity, alignment: .center) // Center horizontally
-                
-               
-
+                .frame(maxWidth: .infinity, alignment: .center)
+            
+            // Search bar for filtering shortcuts
             HStack {
                 Image(systemName: "magnifyingglass")
                     .foregroundColor(.gray)
@@ -65,10 +67,12 @@ struct ShortcutView: View {
             .clipShape(RoundedRectangle(cornerRadius: 15))
             .padding(.horizontal)
 
+            // List of shortcut cards
             ScrollView {
                 VStack(spacing: 20) {
                     Spacer().frame(height: 1)
                     ForEach(filteredShortcuts) { shortcut in
+                        // Navigate to detail view on tap
                         NavigationLink(destination: ShortcutDetailView(shortcutTitle: shortcut.title, selectedLanguage: currentLanguage)) {
                             ShortcutCardView(shortcut: shortcut)
                         }
@@ -78,20 +82,20 @@ struct ShortcutView: View {
             }
         }
         .background(
+            // Gradient background
             LinearGradient(gradient: Gradient(colors: [Color.white, Color(UIColor.systemGray6)]), startPoint: .top, endPoint: .bottom)
                 .edgesIgnoringSafeArea(.all)
         )
         .navigationBarHidden(true)
-    
     }
 }
 
+// Card view for displaying a single shortcut summary
 struct ShortcutCardView: View {
     var shortcut: Shortcut
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            
             Text(shortcut.title)
                 .font(.custom("LexendDeca-Black", size: 20))
                 .bold()
@@ -108,6 +112,7 @@ struct ShortcutCardView: View {
     }
 }
 
+// Utility view for adding a blur effect (not used in this file)
 struct BlurView: UIViewRepresentable {
     var style: UIBlurEffect.Style
     
@@ -119,6 +124,7 @@ struct BlurView: UIViewRepresentable {
     func updateUIView(_ uiView: UIVisualEffectView, context: Context) {}
 }
 
+// Preview for SwiftUI canvas
 struct ShortcutView_Previews: PreviewProvider {
     static var previews: some View {
         ShortcutView(languageName: "Java")

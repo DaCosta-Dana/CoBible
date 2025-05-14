@@ -11,6 +11,7 @@ struct FlashcardView: View {
 
     var body: some View {
         VStack {
+            // Top bar with back button
             HStack {
                 Button(action: { presentationMode.wrappedValue.dismiss() }) {
                     HStack {
@@ -25,11 +26,13 @@ struct FlashcardView: View {
             .padding(.top, 10)
 
             if cards.isEmpty {
+                // Show message if there are no flashcards
                 Text("No flashcards available")
                     .font(.custom("LexendDeca-Regular", size: 20))
                     .foregroundColor(.gray)
             } else {
                 ZStack {
+                    // Show only the current card with animation
                     if isCardVisible {
                         FlashcardContentView(card: cards[currentIndex], isFlipped: $isFlipped)
                             .id(currentIndex)
@@ -38,15 +41,17 @@ struct FlashcardView: View {
                             .gesture(
                                 DragGesture()
                                     .updating($dragOffset, body: { value, state, _ in
+                                        // Track drag offset for swipe gesture
                                         state = value.translation.width
                                     })
                                     .onEnded { value in
+                                        // Handle swipe left (next card)
                                         if value.translation.width < -100 && currentIndex < cards.count - 1 {
-                                            // Swipe left, animate out to left
                                             withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
                                                 cardOffset = -UIScreen.main.bounds.width
                                             }
                                             isFlipped = false
+                                            // After animation, update card index and reset state
                                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.32) {
                                                 cardOffset = 0
                                                 currentIndex += 1
@@ -55,12 +60,14 @@ struct FlashcardView: View {
                                                     isCardVisible = true
                                                 }
                                             }
-                                        } else if value.translation.width > 100 && currentIndex > 0 {
-                                            // Swipe right, animate out to right
+                                        }
+                                        // Handle swipe right (previous card)
+                                        else if value.translation.width > 100 && currentIndex > 0 {
                                             withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
                                                 cardOffset = UIScreen.main.bounds.width
                                             }
                                             isFlipped = false
+                                            // After animation, update card index and reset state
                                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.32) {
                                                 cardOffset = 0
                                                 currentIndex -= 1
@@ -74,6 +81,7 @@ struct FlashcardView: View {
                             )
                     }
                 }
+                // Card index display
                 Text("< \(currentIndex + 1) of \(cards.count) >")
                     .font(.custom("LexendDeca-Regular", size: 16))
                     .foregroundColor(.gray)
@@ -82,6 +90,7 @@ struct FlashcardView: View {
         }
         .padding()
         .background(
+            // Gradient background
             LinearGradient(gradient: Gradient(colors: [Color.white, Color(UIColor.systemGray6)]), startPoint: .top, endPoint: .bottom)
                 .edgesIgnoringSafeArea(.all)
         )
@@ -89,6 +98,7 @@ struct FlashcardView: View {
         .navigationBarHidden(true)
     }
 
+    // Animate to next card
     private func goToNextCard() {
         if currentIndex < cards.count - 1 {
             isFlipped = false
@@ -106,6 +116,7 @@ struct FlashcardView: View {
         }
     }
 
+    // Animate to previous card
     private func goToPreviousCard() {
         if currentIndex > 0 {
             isFlipped = false
@@ -124,13 +135,14 @@ struct FlashcardView: View {
     }
 }
 
+// View for the content of a single flashcard
 struct FlashcardContentView: View {
     var card: Flashcard
     @Binding var isFlipped: Bool
 
     var body: some View {
         ZStack {
-            // Front (question)
+            // Front side (question)
             Group {
                 if !isFlipped {
                     Text(card.question)
@@ -145,7 +157,7 @@ struct FlashcardContentView: View {
             .opacity(isFlipped ? 0 : 1)
             .rotation3DEffect(.degrees(isFlipped ? 180 : 0), axis: (x: 0, y: 1, z: 0))
 
-            // Back (answer)
+            // Back side (answer)
             Group {
                 if isFlipped {
                     Text(card.answer)
@@ -160,6 +172,7 @@ struct FlashcardContentView: View {
             .opacity(isFlipped ? 1 : 0)
             .rotation3DEffect(.degrees(isFlipped ? 0 : -180), axis: (x: 0, y: 1, z: 0))
         }
+        // Tap to flip the card
         .onTapGesture {
             withAnimation(.spring(response: 0.5, dampingFraction: 0.7)) {
                 isFlipped.toggle()
@@ -168,7 +181,7 @@ struct FlashcardContentView: View {
     }
 }
 
-// Preview
+// Preview for SwiftUI canvas
 struct FlashcardView_Previews: PreviewProvider {
     static var previews: some View {
         FlashcardView(cards: [

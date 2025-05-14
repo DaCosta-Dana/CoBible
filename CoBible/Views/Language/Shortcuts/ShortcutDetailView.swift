@@ -2,14 +2,16 @@ import SwiftUI
 import SwiftData
 import WebKit
 
-// WebView to show syntax-highlighted coding
+// UIViewRepresentable to display syntax-highlighted code using WKWebView and highlight.js
 struct SyntaxHighlightedWebView: UIViewRepresentable {
-    var code: String
-    var language: String
+    var code: String      // The code to display
+    var language: String  // The programming language for syntax highlighting
 
     func makeUIView(context: Context) -> WKWebView {
         let webView = WKWebView()
+        // Replace escaped newlines with actual newlines for formatting
         let formattedCode = code.replacingOccurrences(of: "\\n", with: "\n")
+        // HTML template with highlight.js for syntax highlighting
         let html = """
         <html>
         <head>
@@ -36,11 +38,14 @@ struct SyntaxHighlightedWebView: UIViewRepresentable {
         </body>
         </html>
         """
+        // Load the HTML string into the web view
         webView.loadHTMLString(html, baseURL: nil)
         return webView
     }
 
-    func updateUIView(_ uiView: WKWebView, context: Context) {}
+    func updateUIView(_ uiView: WKWebView, context: Context) {
+        // No update needed for static code
+    }
 }
 
 struct ShortcutDetailView: View {

@@ -1,14 +1,15 @@
 import Foundation
 
+// Model struct representing a quiz question
 struct Question: Identifiable {
-    let id = UUID()
-    let language: String
-    let category: String // Added category
-    let questionText: String
-    let options: [String]
-    let correctAnswer: String
+    let id = UUID()                // Unique identifier for the question
+    let language: String           // Programming language (e.g., Java, Python)
+    let category: String           // Category of the question (e.g., Variables, Loops)
+    let questionText: String       // The question text
+    let options: [String]          // Array of answer options (A, B, C, D)
+    let correctAnswer: String      // The correct answer as a letter ("A", "B", "C", "D")
     
-    // Convert letter answer (A, B, C, D) to index (0, 1, 2, 3)
+    // Converts the correct answer letter to its corresponding index (0-3)
     var correctAnswerIndex: Int {
         switch correctAnswer {
         case "A": return 0
@@ -20,16 +21,18 @@ struct Question: Identifiable {
     }
 }
 
+// Singleton class to manage quiz questions and logic
 class Quizz {
-    static let shared = Quizz() // Singleton for easy access
+    static let shared = Quizz() // Singleton instance for global access
     
-    private(set) var allQuestions: [Question] = []
-    private(set) var isLoaded = false
+    private(set) var allQuestions: [Question] = [] // All loaded questions
+    private(set) var isLoaded = false              // Whether questions are loaded
     
     private init() {
         loadQuestions()
     }
     
+    // Loads questions from the CSV file into memory
     private func loadQuestions() {
         guard let path = Bundle.main.path(forResource: "quizz", ofType: "csv") else {
             print("Failed to find quizz.csv")
@@ -40,13 +43,13 @@ class Quizz {
             let content = try String(contentsOfFile: path, encoding: .utf8)
             let rows = content.components(separatedBy: .newlines)
             
-            // Skip the header row
+            // Skip the header row and parse each question row
             for i in 1..<rows.count {
                 let row = rows[i]
                 if row.isEmpty { continue }
                 
                 let columns = row.components(separatedBy: ",")
-                // Now expecting 8 columns: Language,Category,Question,Option A,B,C,D,Answer
+                // Expecting 8 columns: Language, Category, Question, Option A, B, C, D, Answer
                 if columns.count >= 8 {
                     let language = columns[0]
                     let category = columns[1]
@@ -73,14 +76,14 @@ class Quizz {
         }
     }
     
-    // Get 10 random questions (or fewer if not enough are available)
+    // Returns up to 'count' random questions from all loaded questions
     func getRandomQuestions(count: Int = 10) -> [Question] {
         guard isLoaded else { return [] }
         let shuffledQuestions = allQuestions.shuffled()
         return Array(shuffledQuestions.prefix(min(count, shuffledQuestions.count)))
     }
     
-    // Get random questions for a specific programming language
+    // Returns up to 'count' random questions for a specific language
     func getRandomQuestionsForLanguage(language: String, count: Int = 10) -> [Question] {
         guard isLoaded else { return [] }
         let languageQuestions = allQuestions.filter { $0.language == language }
@@ -88,13 +91,13 @@ class Quizz {
         return Array(shuffledQuestions.prefix(min(count, shuffledQuestions.count)))
     }
     
-    // Get list of available programming languages
+    // Returns a sorted list of all available programming languages
     func getAvailableLanguages() -> [String] {
         guard isLoaded else { return [] }
         return Array(Set(allQuestions.map { $0.language })).sorted()
     }
 
-    // Get random questions for a specific language and category
+    // Returns up to 'count' random questions for a specific language and category
     func getRandomQuestionsForLanguageAndCategory(language: String, category: String, count: Int = 10) -> [Question] {
         guard isLoaded else { return [] }
         let filtered = allQuestions.filter { $0.language == language && $0.category == category }
@@ -102,14 +105,14 @@ class Quizz {
         return Array(shuffled.prefix(min(count, shuffled.count)))
     }
 
-    // Get available categories for a language
+    // Returns a sorted list of available categories for a given language
     func getAvailableCategories(for language: String) -> [String] {
         guard isLoaded else { return [] }
         let categories = allQuestions.filter { $0.language == language }.map { $0.category }
         return Array(Set(categories)).sorted()
     }
 
-    // Get random questions for a specific language and multiple categories
+    // Returns up to 'count' random questions for a language and multiple categories
     func getRandomQuestionsForLanguageAndCategories(language: String, categories: [String], count: Int = 10) -> [Question] {
         guard isLoaded else { return [] }
         let filtered = allQuestions.filter { $0.language == language && categories.contains($0.category) }
