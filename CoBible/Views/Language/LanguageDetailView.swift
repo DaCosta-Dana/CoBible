@@ -12,6 +12,7 @@ struct LanguageDetailView: View {
                     .font(.custom("LexendDeca-Black", size: 40))
                     .bold()
                     .padding(.top, 20)
+                    
                 
                 // Image du langage
                 Image(imageName)
@@ -67,8 +68,17 @@ struct LanguageDetailView: View {
                     ) {
                         Text(languageName == "Java" ? "Python" : "Java")
                             .font(.custom("LexendDeca-Black", size: 16))
+                            .foregroundColor(.blue)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 8)
+                            .background(Color.white)
+                            .cornerRadius(12)
+                            .shadow(radius: 3)
+                            
                     }
+                    
                 }
+                
             }
         }
         .navigationBarBackButtonHidden(true)

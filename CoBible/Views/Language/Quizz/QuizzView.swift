@@ -64,6 +64,7 @@ struct QuizzView: View {
         }
         .navigationBarBackButtonHidden(true) // <-- Add this line
         .navigationBarHidden(true)           // <-- Add this line
+    
     }
 
     // Split the main conditional into a computed property to help the compiler

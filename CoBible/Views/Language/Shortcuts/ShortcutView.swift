@@ -23,11 +23,12 @@ struct ShortcutView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
+            // Top bar with Home and Language switch (styled like QuizzView)
             HStack {
                 Button(action: { presentationMode.wrappedValue.dismiss() }) {
                     HStack {
                         Image(systemName: "chevron.left")
-                        Text("Back")
+                        Text("Home")
                             .font(.custom("LexendDeca-Black", size: 16))
                     }
                 }
@@ -37,17 +38,23 @@ struct ShortcutView: View {
                 }) {
                     Text(currentLanguage == "Java" ? "Python" : "Java")
                         .font(.custom("LexendDeca-Black", size: 16))
-                        .foregroundColor(.blue)
+                        .foregroundColor(.white)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 8)
+                        .background(Color.blue)
+                        .cornerRadius(12)
+                        .shadow(radius: 3)
                 }
             }
             .padding(.horizontal)
-            .padding(.top, 10)
+            
 
             Text("\(currentLanguage) Shortcuts")
-                .font(.custom("LexendDeca-Black", size: 30))
+                .font(.custom("LexendDeca-Black", size: 40))
                 .bold()
-                .padding(.top, 20)
-                .padding(.horizontal)
+                .frame(maxWidth: .infinity, alignment: .center) // Center horizontally
+                
+               
 
             HStack {
                 Image(systemName: "magnifyingglass")
@@ -62,6 +69,7 @@ struct ShortcutView: View {
 
             ScrollView {
                 VStack(spacing: 20) {
+                    Spacer().frame(height: 1)
                     ForEach(filteredShortcuts) { shortcut in
                         NavigationLink(destination: ShortcutDetailView(shortcutTitle: shortcut.title, selectedLanguage: currentLanguage)) {
                             ShortcutCardView(shortcut: shortcut)
@@ -70,13 +78,13 @@ struct ShortcutView: View {
                 }
                 .padding(.horizontal)
             }
-            Spacer()
         }
         .background(
             LinearGradient(gradient: Gradient(colors: [Color.white, Color(UIColor.systemGray6)]), startPoint: .top, endPoint: .bottom)
                 .edgesIgnoringSafeArea(.all)
         )
         .navigationBarHidden(true)
+    
     }
 }
 
@@ -85,6 +93,7 @@ struct ShortcutCardView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
+            
             Text(shortcut.title)
                 .font(.custom("LexendDeca-Black", size: 20))
                 .bold()
