@@ -100,7 +100,8 @@ struct ShortcutDetailView: View {
                     .padding(.top, 50)
             }
         }
-        
+
+        //Custom back button in the toolbar
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button(action: {
@@ -117,11 +118,13 @@ struct ShortcutDetailView: View {
         .navigationBarBackButtonHidden(true)
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
+            //Fetch the shortcut from the database when the view appears
             shortcut = ShortcutDataManager.fetchShortcutByTitle(title: shortcutTitle, context: context)
         }
     }
 }
 
+//Preview provider for SwiftUi previews
 struct ShortcutDetailView_Previews: PreviewProvider {
     static var previews: some View {
         ShortcutDetailView(shortcutTitle: "Print", selectedLanguage: "Java")
